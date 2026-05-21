@@ -5,11 +5,13 @@
   --deep-green: #03846d;
   --sky: #1a7599;
   --ink: #10202c;
-  --muted: #6b7881;
-  --line: rgba(0, 58, 93, .12);
-  --panel: rgba(255, 255, 255, .76);
+  --muted: #71808a;
+  --line: rgba(0, 58, 93, .085);
+  --panel: rgba(255, 255, 255, .62);
   --soft: #f5f8f7;
-  --shadow: 0 24px 70px rgba(0, 58, 93, .14);
+  --shadow: 0 22px 60px rgba(31, 67, 86, .1);
+  --glass-border: rgba(255, 255, 255, .68);
+  --glass-fill: rgba(255, 255, 255, .52);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
 }
 
@@ -22,9 +24,10 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    radial-gradient(circle at 14% 12%, rgba(5, 206, 124, .2), transparent 23rem),
-    radial-gradient(circle at 88% 4%, rgba(26, 117, 153, .22), transparent 24rem),
-    linear-gradient(135deg, #f7fbfa 0%, #eef6f2 48%, #f8faf7 100%);
+    radial-gradient(circle at 15% 10%, rgba(5, 206, 124, .13), transparent 24rem),
+    radial-gradient(circle at 90% 6%, rgba(26, 117, 153, .14), transparent 24rem),
+    radial-gradient(circle at 54% 42%, rgba(255, 255, 255, .8), transparent 34rem),
+    linear-gradient(135deg, #fbfdfc 0%, #f1f8f5 48%, #f8fbfc 100%);
 }
 
 body:has(dialog[open]) {
@@ -46,7 +49,7 @@ select {
 .app-shell {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
-  gap: 28px;
+  gap: 24px;
   min-height: 100vh;
   padding: 20px;
 }
@@ -59,11 +62,12 @@ select {
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  padding: 14px 10px;
-  border: 1px solid rgba(255, 255, 255, .34);
+  padding: 12px 10px;
+  border: 1px solid var(--glass-border);
   border-radius: 30px;
-  background: linear-gradient(180deg, rgba(0, 58, 93, .96), rgba(4, 41, 64, .96));
-  box-shadow: 0 22px 58px rgba(0, 58, 93, .2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .58), rgba(255, 255, 255, .28));
+  box-shadow: 0 20px 54px rgba(0, 58, 93, .12);
+  backdrop-filter: blur(28px) saturate(1.25);
 }
 
 .main-logo {
@@ -71,9 +75,10 @@ select {
   height: 62px;
   object-fit: contain;
   padding: 9px 10px;
-  border-radius: 18px;
-  background: white;
-  box-shadow: 0 12px 28px rgba(0, 21, 38, .18);
+  border: 1px solid rgba(255, 255, 255, .82);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 12px 30px rgba(0, 58, 93, .09);
 }
 
 .brand-list {
@@ -93,12 +98,13 @@ select {
 .brand-logo {
   display: grid;
   place-items: center;
-  min-height: 62px;
+  min-height: 60px;
   padding: 9px;
-  border: 1px solid rgba(255, 255, 255, .72);
-  background: rgba(255, 255, 255, .92);
-  opacity: .82;
-  box-shadow: 0 8px 20px rgba(0, 21, 38, .1);
+  border: 1px solid rgba(255, 255, 255, .78);
+  background: rgba(255, 255, 255, .7);
+  opacity: .86;
+  box-shadow: 0 8px 22px rgba(0, 58, 93, .055);
+  backdrop-filter: blur(18px);
   transition: transform .2s ease, opacity .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 
@@ -117,37 +123,37 @@ select {
   opacity: 1;
   transform: translateY(-1px);
   border-color: rgba(255, 255, 255, .95);
-  background: white;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-accent, var(--area-green)) 34%, transparent), 0 14px 28px rgba(0, 21, 38, .14);
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent, var(--area-green)) 18%, transparent), 0 14px 28px rgba(0, 58, 93, .08);
 }
 
 .brand-all {
-  color: white;
-  background: rgba(255, 255, 255, .14);
-  border-color: rgba(255, 255, 255, .18);
+  color: var(--area-blue);
+  background: rgba(255, 255, 255, .7);
+  border-color: rgba(255, 255, 255, .78);
 }
 
 .brand-all.active,
 .brand-all:hover {
-  color: white;
-  background: linear-gradient(145deg, var(--deep-green), color-mix(in srgb, var(--area-green) 44%, var(--deep-green)));
+  color: var(--area-blue);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(232, 250, 242, .9));
 }
 
 .rail-button {
   width: 100%;
   min-height: 50px;
   margin-top: auto;
-  background: rgba(255, 255, 255, .16);
-  color: white;
+  background: rgba(255, 255, 255, .58);
+  color: var(--area-blue);
   font-weight: 750;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 8px 20px rgba(0, 58, 93, .05);
 }
 
 .workspace {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .topbar,
@@ -160,8 +166,8 @@ select {
 
 .eyebrow {
   margin: 0 0 8px;
-  color: var(--deep-green);
-  font-size: 12px;
+  color: rgba(3, 132, 109, .86);
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -174,8 +180,8 @@ p {
 
 h1 {
   margin-bottom: 0;
-  color: var(--area-blue);
-  font-size: clamp(34px, 4vw, 56px);
+  color: rgba(0, 58, 93, .96);
+  font-size: clamp(32px, 3.4vw, 48px);
   line-height: 1;
   letter-spacing: 0;
 }
@@ -204,10 +210,11 @@ h1 {
   width: min(440px, 36vw);
   height: 48px;
   padding: 0 16px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, .72);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
-  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, .58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 10px 30px rgba(0, 58, 93, .045);
+  backdrop-filter: blur(22px) saturate(1.2);
 }
 
 .search input {
@@ -226,8 +233,9 @@ h1 {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255, 255, 255, .96);
-  box-shadow: var(--shadow);
+  background: rgba(255, 255, 255, .84);
+  box-shadow: 0 18px 46px rgba(0, 58, 93, .11);
+  backdrop-filter: blur(24px);
 }
 
 .search-suggestions button {
@@ -263,9 +271,10 @@ textarea {
   padding: 0 22px;
   border-radius: 999px;
   color: white;
-  background: var(--area-blue);
+  background: linear-gradient(180deg, rgba(0, 58, 93, .92), rgba(0, 58, 93, .84));
   font-weight: 800;
   white-space: nowrap;
+  box-shadow: 0 10px 28px rgba(0, 58, 93, .11);
 }
 
 .add-post-button {
@@ -278,9 +287,11 @@ textarea {
   place-items: center;
   min-height: 46px;
   border-radius: 999px;
-  color: var(--area-blue);
-  background: rgba(255, 255, 255, .76);
+  color: rgba(0, 58, 93, .9);
+  background: rgba(255, 255, 255, .6);
   font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), 0 8px 22px rgba(0, 58, 93, .045);
+  backdrop-filter: blur(18px);
 }
 
 .ghost-button {
@@ -301,7 +312,8 @@ textarea {
   border-radius: 14px;
   padding: 12px 14px;
   outline: 0;
-  background: rgba(255, 255, 255, .84);
+  background: rgba(255, 255, 255, .62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .68);
 }
 
 .week-controls select {
@@ -310,7 +322,7 @@ textarea {
   padding: 0 46px 0 18px;
   border-radius: 999px;
   color: white;
-  background: var(--area-blue);
+  background: linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
   font-weight: 800;
 }
 
@@ -322,17 +334,19 @@ textarea {
 .toolbar-meta span {
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
+  background: rgba(255, 255, 255, .56);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72);
+  backdrop-filter: blur(18px);
 }
 
 .calendar-wrap {
   overflow: auto;
   min-height: 720px;
-  border: 1px solid rgba(255, 255, 255, .7);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, .54);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .42);
+  box-shadow: 0 22px 64px rgba(0, 58, 93, .08);
+  backdrop-filter: blur(28px) saturate(1.2);
 }
 
 .calendar-grid {
@@ -345,8 +359,8 @@ textarea {
 .day-head,
 .time-label,
 .calendar-cell {
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-right: 1px solid rgba(0, 58, 93, .065);
+  border-bottom: 1px solid rgba(0, 58, 93, .065);
 }
 
 .time-corner {
@@ -357,7 +371,7 @@ textarea {
   place-items: center;
   min-height: 82px;
   color: var(--muted);
-  background: rgba(247, 251, 250, .92);
+  background: rgba(255, 255, 255, .62);
   font-weight: 800;
 }
 
@@ -370,7 +384,7 @@ textarea {
   min-height: 82px;
   padding: 14px;
   border-top: 0;
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, .64);
   color: var(--ink);
   text-align: center;
 }
@@ -388,7 +402,7 @@ textarea {
 }
 
 .day-head.today {
-  background: var(--area-blue);
+  background: linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
 }
 
 .day-head.today span,
@@ -402,7 +416,7 @@ textarea {
   min-height: 132px;
   padding-top: 12px;
   color: var(--muted);
-  background: rgba(247, 251, 250, .72);
+  background: rgba(255, 255, 255, .44);
   font-size: 12px;
   font-weight: 800;
 }
@@ -410,11 +424,11 @@ textarea {
 .calendar-cell {
   min-height: 132px;
   padding: 10px;
-  background: rgba(255, 255, 255, .36);
+  background: rgba(255, 255, 255, .22);
 }
 
 .calendar-cell.today-column {
-  background: rgba(0, 58, 93, .045);
+  background: rgba(0, 58, 93, .032);
 }
 
 .post-card {
@@ -425,19 +439,21 @@ textarea {
   min-height: 112px;
   padding: 12px;
   border: 0;
+  border: 1px solid rgba(255, 255, 255, .52);
   border-radius: 18px;
-  background: var(--post-color);
+  background: color-mix(in srgb, var(--post-color) 68%, white 32%);
   color: var(--ink);
   text-align: left;
-  box-shadow: inset 4px 0 0 var(--brand-accent), 0 14px 34px rgba(0, 58, 93, .11);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--brand-accent) 72%, white), 0 12px 28px rgba(0, 58, 93, .07);
+  backdrop-filter: blur(12px);
 }
 
 .brand-dot {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--brand-accent);
 }
@@ -467,7 +483,7 @@ textarea {
 .channel-row em {
   padding: 4px 6px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .64);
+  background: rgba(255, 255, 255, .68);
   font-style: normal;
   font-size: 11px;
   font-weight: 800;
@@ -481,10 +497,12 @@ dialog {
   margin: auto;
   border: 0;
   padding: 0;
+  border: 1px solid rgba(255, 255, 255, .68);
   border-radius: 28px;
-  background: rgba(251, 253, 252, .98);
+  background: rgba(251, 253, 252, .84);
   color: var(--ink);
-  box-shadow: 0 34px 90px rgba(0, 58, 93, .26);
+  box-shadow: 0 34px 90px rgba(0, 58, 93, .16);
+  backdrop-filter: blur(30px) saturate(1.18);
 }
 
 dialog:not([open]) {
@@ -492,8 +510,8 @@ dialog:not([open]) {
 }
 
 dialog::backdrop {
-  background: rgba(0, 35, 56, .22);
-  backdrop-filter: blur(8px);
+  background: rgba(223, 235, 236, .34);
+  backdrop-filter: blur(14px);
 }
 
 .close-button {
@@ -507,7 +525,7 @@ dialog::backdrop {
   height: 40px;
   border: 0;
   border-radius: 50%;
-  background: rgba(0, 58, 93, .1);
+  background: rgba(255, 255, 255, .62);
   color: var(--area-blue);
   font-size: 24px;
   line-height: 1;
@@ -528,7 +546,7 @@ dialog::backdrop {
   place-items: center;
   min-height: 650px;
   padding: 26px;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--brand-accent) 22%, white), #f7fbfa);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--brand-accent) 12%, white), rgba(247, 251, 250, .76));
 }
 
 .social-preview.square img,
@@ -558,7 +576,7 @@ dialog::backdrop {
   border-radius: 26px;
   object-fit: cover;
   background: white;
-  box-shadow: 0 24px 60px rgba(0, 58, 93, .18);
+  box-shadow: 0 22px 56px rgba(0, 58, 93, .12);
 }
 
 .media-placeholder {
@@ -566,7 +584,7 @@ dialog::backdrop {
   place-items: center;
   padding: 28px;
   color: white;
-  background: linear-gradient(145deg, var(--area-blue), var(--sky));
+  background: linear-gradient(145deg, rgba(0, 58, 93, .9), rgba(26, 117, 153, .78));
   text-align: center;
 }
 
@@ -605,7 +623,7 @@ dialog::backdrop {
   min-height: 36px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .78);
+  background: rgba(255, 255, 255, .62);
   color: var(--area-blue);
   font-weight: 800;
 }
@@ -622,7 +640,7 @@ dialog::backdrop {
 
 .danger-action {
   color: #b42318;
-  background: rgba(255, 255, 255, .68);
+  background: rgba(255, 255, 255, .54);
 }
 
 .detail-copy h2,
@@ -643,7 +661,8 @@ dialog::backdrop {
 .detail-grid div {
   padding: 14px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, .72);
+  background: rgba(255, 255, 255, .54);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .66);
 }
 
 .detail-grid span {
@@ -695,8 +714,9 @@ fieldset {
   gap: 8px;
   margin: 0;
   padding: 14px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(0, 58, 93, .08);
   border-radius: 18px;
+  background: rgba(255, 255, 255, .32);
 }
 
 legend {
@@ -711,7 +731,7 @@ legend {
   min-height: 46px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(0, 58, 93, .06);
+  background: rgba(255, 255, 255, .5);
   color: var(--ink);
   font-weight: 800;
   transition: background .18s ease, color .18s ease, box-shadow .18s ease;
@@ -725,8 +745,8 @@ legend {
 
 .channel-picker label:has(input:checked) {
   color: white;
-  background: var(--area-blue);
-  box-shadow: 0 8px 18px rgba(0, 58, 93, .16);
+  background: linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
+  box-shadow: 0 8px 18px rgba(0, 58, 93, .1);
 }
 
 .notes-dialog {
