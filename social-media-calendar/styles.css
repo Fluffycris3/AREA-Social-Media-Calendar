@@ -65,8 +65,8 @@ select {
   padding: 12px 10px;
   border: 1px solid rgba(255, 255, 255, .28);
   border-radius: 30px;
-  background: linear-gradient(180deg, rgba(244, 248, 249, .86), rgba(221, 231, 236, .72));
-  box-shadow: 0 22px 58px rgba(0, 58, 93, .12);
+  background: rgba(224, 233, 237, .82);
+  box-shadow: 0 18px 42px rgba(0, 58, 93, .1);
   backdrop-filter: blur(28px) saturate(1.18);
 }
 
@@ -100,10 +100,10 @@ select {
   place-items: center;
   min-height: 60px;
   padding: 9px;
-  border: 1px solid rgba(255, 255, 255, .82);
-  background: rgba(255, 255, 255, .84);
+  border: 1px solid rgba(0, 58, 93, .08);
+  background: rgba(246, 249, 250, .86);
   opacity: .92;
-  box-shadow: 0 10px 24px rgba(0, 58, 93, .06);
+  box-shadow: 0 8px 18px rgba(0, 58, 93, .055);
   backdrop-filter: blur(18px);
   transition: transform .2s ease, opacity .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
@@ -122,15 +122,15 @@ select {
 .brand-logo:hover {
   opacity: 1;
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, .95);
-  background: rgba(255, 255, 255, .92);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent, var(--area-green)) 18%, transparent), 0 14px 28px rgba(0, 58, 93, .08);
+  border-color: color-mix(in srgb, var(--brand-accent, var(--area-green)) 24%, transparent);
+  background: rgba(248, 251, 251, .95);
+  box-shadow: 0 10px 22px rgba(0, 58, 93, .075);
 }
 
 .brand-all {
   color: var(--area-blue);
-  background: rgba(255, 255, 255, .52);
-  border-color: rgba(255, 255, 255, .7);
+  background: rgba(246, 249, 250, .68);
+  border-color: rgba(0, 58, 93, .08);
 }
 
 .brand-all.active,
@@ -144,10 +144,10 @@ select {
   width: 100%;
   min-height: 50px;
   margin-top: auto;
-  background: rgba(255, 255, 255, .52);
+  background: rgba(246, 249, 250, .68);
   color: var(--area-blue);
   font-weight: 750;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 8px 20px rgba(0, 58, 93, .05);
+  box-shadow: 0 8px 18px rgba(0, 58, 93, .055);
 }
 
 .workspace {
@@ -324,17 +324,18 @@ textarea {
   border-radius: 999px;
   color: white;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
-    linear-gradient(180deg, rgba(0, 58, 93, .82), rgba(0, 58, 93, .74));
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='7' viewBox='0 0 13 7'%3E%3Cpath d='M1 1l5.5 5L12 1' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+    rgba(0, 58, 93, .78);
   background-position:
-    calc(100% - 28px) 50%,
+    calc(100% - 30px) 50%,
     0 0;
   background-size:
-    14px 8px,
+    13px 7px,
     100% 100%;
   background-repeat: no-repeat;
   font-weight: 800;
   appearance: none;
+  box-shadow: none;
 }
 
 .toolbar-meta {
@@ -773,14 +774,23 @@ legend {
   .app-shell {
     grid-template-columns: 1fr;
     padding: 14px;
+    gap: 16px;
   }
 
   .brand-rail {
     position: static;
     height: auto;
     flex-direction: row;
+    align-items: center;
+    padding: 10px;
     border-radius: 24px;
     overflow-x: auto;
+  }
+
+  .main-logo {
+    width: 76px;
+    min-width: 76px;
+    padding: 4px 4px 6px;
   }
 
   .brand-list {
@@ -790,6 +800,7 @@ legend {
 
   .brand-logo {
     min-width: 88px;
+    min-height: 54px;
   }
 
   .rail-button {
@@ -835,15 +846,111 @@ legend {
 @media (max-width: 680px) {
   .app-shell {
     padding: 10px;
+    gap: 14px;
   }
 
   h1 {
-    font-size: 34px;
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+  }
+
+  .brand-rail {
+    gap: 8px;
+    border-radius: 20px;
+  }
+
+  .main-logo {
+    width: 66px;
+    min-width: 66px;
+  }
+
+  .brand-list {
+    gap: 8px;
+  }
+
+  .brand-logo {
+    min-width: 74px;
+    min-height: 48px;
+    border-radius: 16px;
+    padding: 7px;
+  }
+
+  .brand-logo img {
+    max-height: 28px;
+  }
+
+  .rail-button {
+    min-width: 70px;
+    min-height: 46px;
+    border-radius: 16px;
   }
 
   .topbar-actions {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .search,
+  .primary-button,
+  .ghost-button {
+    min-height: 44px;
+    height: 44px;
+  }
+
+  .calendar-toolbar {
+    gap: 10px;
+  }
+
+  .week-controls {
+    grid-template-columns: 42px minmax(190px, 1fr) 42px;
+  }
+
+  .week-controls select {
+    height: 44px;
+    padding-left: 16px;
+    padding-right: 46px;
+    background-position:
+      calc(100% - 24px) 50%,
+      0 0;
+    font-size: 15px;
+  }
+
+  .icon-button {
+    width: 42px;
+    min-height: 42px;
+  }
+
+  .toolbar-meta span {
+    padding: 8px 11px;
+    font-size: 13px;
+  }
+
+  .calendar-grid {
+    grid-template-columns: 64px repeat(5, minmax(168px, 1fr));
+    min-width: 904px;
+  }
+
+  .time-corner,
+  .day-head {
+    min-height: 72px;
+  }
+
+  .day-head strong {
+    font-size: 18px;
+  }
+
+  .time-label,
+  .calendar-cell {
+    min-height: 116px;
+  }
+
+  .post-card {
+    min-height: 100px;
+    padding: 10px;
   }
 
   .channel-picker {
@@ -852,5 +959,29 @@ legend {
 
   .calendar-wrap {
     border-radius: 22px;
+  }
+
+  dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 22px;
+  }
+
+  .add-post-dialog form,
+  .notes-dialog {
+    padding: 24px;
+  }
+
+  .detail-copy {
+    padding: 24px;
+  }
+
+  .detail-title-row,
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-actions {
+    padding-right: 44px;
   }
 }
