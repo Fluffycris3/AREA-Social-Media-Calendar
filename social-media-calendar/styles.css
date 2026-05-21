@@ -65,7 +65,9 @@ select {
   padding: 12px 10px;
   border: 1px solid rgba(255, 255, 255, .28);
   border-radius: 30px;
-  background: linear-gradient(180deg, rgba(0, 58, 93, .88), rgba(0, 58, 93, .74));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .78) 0%, rgba(255, 255, 255, .34) 94px, rgba(0, 58, 93, .7) 210px, rgba(0, 58, 93, .66) 100%),
+    linear-gradient(180deg, rgba(0, 58, 93, .76), rgba(0, 58, 93, .62));
   box-shadow: 0 22px 58px rgba(0, 58, 93, .16);
   backdrop-filter: blur(22px) saturate(1.12);
 }
@@ -74,7 +76,7 @@ select {
   width: 94px;
   height: auto;
   object-fit: contain;
-  padding: 8px 6px 12px;
+  padding: 10px 6px 14px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -320,11 +322,24 @@ textarea {
 .week-controls select {
   min-width: 250px;
   height: 46px;
-  padding: 0 56px 0 18px;
+  padding: 0 62px 0 18px;
   border-radius: 999px;
   color: white;
-  background: linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
+  background:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, .86) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, .86) 50%, transparent 50%),
+    linear-gradient(180deg, rgba(0, 58, 93, .78), rgba(0, 58, 93, .7));
+  background-position:
+    calc(100% - 42px) calc(50% - 2px),
+    calc(100% - 34px) calc(50% - 2px),
+    0 0;
+  background-size:
+    8px 8px,
+    8px 8px,
+    100% 100%;
+  background-repeat: no-repeat;
   font-weight: 800;
+  appearance: none;
 }
 
 .toolbar-meta {
@@ -681,13 +696,18 @@ dialog::backdrop {
 .note-editor,
 .add-post-dialog label {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   color: var(--area-blue);
   font-weight: 800;
 }
 
+.note-editor {
+  margin-bottom: 18px;
+}
+
 textarea {
   min-height: 120px;
+  margin-bottom: 8px;
   resize: vertical;
   line-height: 1.45;
 }
