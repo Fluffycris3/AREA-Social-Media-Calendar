@@ -315,12 +315,130 @@ function renderSuggestions() {
 
 function mediaMarkup(post) {
   if (post.mediaUrl && post.mediaType === "video") {
-    return `<video src="${post.mediaUrl}" controls></video>`;
+    return `<video src="${post.mediaUrl}" controls muted></video>`;
   }
   if (post.mediaUrl) {
-    return `<img src="${post.mediaUrl}" alt="${post.title}">`;
+    return `<img src="${post.mediaUrl}" alt="${escapeHtml(post.title)}">`;
   }
-  return `<div class="media-placeholder"><span>${getBrand(post.brandId).name}</span><strong>${post.title}</strong></div>`;
+  return `<div class="media-placeholder"><span>${getBrand(post.brandId).name}</span><strong>${escapeHtml(post.title)}</strong></div>`;
+}
+
+function channelLabel(channel) {
+  return {
+    IG: "Instagram",
+    FB: "Facebook",
+    X: "X",
+    LinkedIn: "LinkedIn",
+    YouTube: "YouTube"
+  }[channel] || channel;
+}
+
+function accountName(post, channel) {
+  const brand = getBrand(post.brandId);
+  if (channel === "IG") return brand.id === "area" ? "abrealestateassociation" : brand.name.toLowerCase().replaceAll(" ", "");
+  if (channel === "X") return `@${brand.name.replaceAll(" ", "")}`;
+  return brand.name === "AREA" ? "Alberta Real Estate Association" : brand.name;
+}
+
+function platformPreview(post, channel) {
+  const brand = getBrand(post.brandId);
+  const media = mediaMarkup(post);
+  const dateText = parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const safeCaption = escapeHtml(post.caption);
+  const safeTitle = escapeHtml(post.title);
+  const account = escapeHtml(accountName(post, channel));
+
+  if (channel === "IG") {
+    return `
+      <article class="platform-card instagram-preview">
+        <div class="platform-heading"><span class="ig-mark">◎</span><span>Instagram post</span></div>
+        <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
+        <div class="social-card">
+          <div class="social-card-head">
+            <img src="${brand.logo}" alt="${brand.name}">
+            <strong>${account}</strong>
+            <span>•••</span>
+          </div>
+          <div class="social-media ${post.format}">${media}</div>
+          <div class="ig-actions"><span>♡</span><span>⌕</span><span>✈</span><span>▢</span></div>
+          <p><strong>${account}</strong> ${safeCaption}</p>
+        </div>
+      </article>
+    `;
+  }
+
+  if (channel === "LinkedIn") {
+    return `
+      <article class="platform-card linkedin-preview">
+        <div class="platform-heading"><span class="li-mark">in</span><span>LinkedIn post</span></div>
+        <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
+        <div class="social-card">
+          <div class="social-card-head">
+            <img src="${brand.logo}" alt="${brand.name}">
+            <div><strong>${account}</strong><small>now · Public</small></div>
+            <span>•••</span>
+          </div>
+          <p>${safeCaption}</p>
+          <div class="social-media linkedin-media ${post.format}">${media}</div>
+          <div class="social-actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+        </div>
+      </article>
+    `;
+  }
+
+  if (channel === "X") {
+    return `
+      <article class="platform-card x-preview">
+        <div class="platform-heading"><span class="x-mark">X</span><span>X post</span></div>
+        <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
+        <div class="social-card">
+          <div class="social-card-head">
+            <img src="${brand.logo}" alt="${brand.name}">
+            <div><strong>${account}</strong><small>${brand.name}</small></div>
+            <span>•••</span>
+          </div>
+          <p>${safeCaption}</p>
+          <div class="social-media x-media ${post.format}">${media}</div>
+          <div class="social-actions"><span>Reply</span><span>Repost</span><span>Like</span><span>Share</span></div>
+        </div>
+      </article>
+    `;
+  }
+
+  if (channel === "YouTube") {
+    return `
+      <article class="platform-card youtube-preview">
+        <div class="platform-heading"><span class="yt-mark">▶</span><span>YouTube post</span></div>
+        <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
+        <div class="social-card">
+          <div class="social-media youtube-media landscape">${media}</div>
+          <h3>${safeTitle}</h3>
+          <div class="social-card-head compact">
+            <img src="${brand.logo}" alt="${brand.name}">
+            <div><strong>${account}</strong><small>Scheduled upload</small></div>
+          </div>
+          <p>${safeCaption}</p>
+        </div>
+      </article>
+    `;
+  }
+
+  return `
+    <article class="platform-card facebook-preview">
+      <div class="platform-heading"><span class="fb-mark">f</span><span>Facebook post</span></div>
+      <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
+      <div class="social-card">
+        <div class="social-card-head">
+          <img src="${brand.logo}" alt="${brand.name}">
+          <div><strong>${account}</strong><small>Just now · Public</small></div>
+          <span>•••</span>
+        </div>
+        <p>${safeCaption}</p>
+        <div class="social-media facebook-media ${post.format}">${media}</div>
+        <div class="social-actions"><span>Like</span><span>Comment</span><span>Share</span></div>
+      </div>
+    </article>
+  `;
 }
 
 function openPost(postId) {
@@ -329,8 +447,8 @@ function openPost(postId) {
   const brand = getBrand(post.brandId);
   postDialogContent.innerHTML = `
     <div class="detail-layout">
-      <div class="social-preview ${post.format}" style="--brand-accent: ${brand.accent}">
-        ${mediaMarkup(post)}
+      <div class="preview-scroll" style="--brand-accent: ${brand.accent}">
+        ${post.channels.map((channel) => platformPreview(post, channel)).join("")}
       </div>
       <div class="detail-copy">
         <p class="eyebrow">${brand.name} · ${post.channels.join(", ")}</p>
@@ -341,20 +459,19 @@ function openPost(postId) {
             <button class="text-action danger-action" type="button" data-delete-post="${post.id}">Delete</button>
           </div>
         </div>
-        <p>${escapeHtml(post.caption)}</p>
-        <div class="detail-grid">
-          <div><span>Date</span><strong>${parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</strong></div>
-          <div><span>Time</span><strong>${post.time}</strong></div>
-          <div><span>Status</span><strong>${post.status}</strong></div>
-          <div><span>Owner</span><strong>${post.owner}</strong></div>
-          <div><span>Size</span><strong>${formatLabel(post.format)}</strong></div>
-          <div><span>Media</span><strong>${post.mediaType || "Image"}</strong></div>
+        <section class="content-review">
+          <span>Post content</span>
+          <p>${escapeHtml(post.caption)}</p>
+        </section>
+        <div class="approval-panel ${post.approved ? "approved" : ""}">
+          <div>
+            <span>Approval</span>
+            <strong>${post.approved ? "Approved" : "Needs approval"}</strong>
+          </div>
+          <button class="primary-button approval-button" type="button" data-toggle-approval="${post.id}">
+            ${post.approved ? "Reset approval" : "Approve post"}
+          </button>
         </div>
-        <label class="note-editor">
-          Notes
-          <textarea id="postNote">${escapeHtml(post.notes || "")}</textarea>
-        </label>
-        <button class="primary-button" type="button" data-save-note="${post.id}">Save note</button>
       </div>
     </div>
   `;
@@ -432,6 +549,7 @@ function handleAddPost(event) {
     notes: data.get("notes"),
     mediaType,
     mediaUrl: mediaUrl || existingPost?.mediaUrl || "",
+    approved: existingPost?.approved || false,
     color: tintForBrand(brand.id)
   };
 
@@ -510,16 +628,17 @@ searchSuggestions.addEventListener("click", (event) => {
 });
 
 postDialog.addEventListener("click", (event) => {
-  const saveButton = event.target.closest("[data-save-note]");
+  const approvalButton = event.target.closest("[data-toggle-approval]");
   const editButton = event.target.closest("[data-edit-post]");
   const deleteButton = event.target.closest("[data-delete-post]");
 
-  if (saveButton) {
-    const post = posts.find((item) => item.id === Number(saveButton.dataset.saveNote));
-    post.notes = document.querySelector("#postNote").value;
+  if (approvalButton) {
+    const post = posts.find((item) => item.id === Number(approvalButton.dataset.toggleApproval));
+    post.approved = !post.approved;
     savePosts();
     renderCalendar();
     postDialog.close();
+    openPost(post.id);
   }
 
   if (editButton) {

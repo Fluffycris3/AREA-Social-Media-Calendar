@@ -544,59 +544,182 @@ dialog::backdrop {
 }
 
 .post-dialog {
-  width: min(1040px, calc(100vw - 32px));
+  width: min(1180px, calc(100vw - 32px));
 }
 
 .detail-layout {
   display: grid;
-  grid-template-columns: minmax(320px, 48%) 1fr;
+  grid-template-columns: minmax(360px, 52%) 1fr;
   gap: 0;
 }
 
-.social-preview {
+.preview-scroll {
   display: grid;
-  place-items: center;
-  min-height: 650px;
-  padding: 26px;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--brand-accent) 12%, white), rgba(247, 251, 250, .76));
+  align-content: start;
+  gap: 28px;
+  max-height: calc(100dvh - 72px);
+  overflow-y: auto;
+  padding: 34px 28px;
+  background: rgba(239, 244, 246, .76);
 }
 
-.social-preview.square img,
-.social-preview.square video,
-.social-preview.square .media-placeholder {
-  aspect-ratio: 1;
-  width: min(420px, 100%);
-}
-
-.social-preview.story img,
-.social-preview.story video,
-.social-preview.story .media-placeholder {
-  aspect-ratio: 9 / 16;
-  width: min(330px, 100%);
-}
-
-.social-preview.landscape img,
-.social-preview.landscape video,
-.social-preview.landscape .media-placeholder {
-  aspect-ratio: 1200 / 628;
-  width: min(500px, 100%);
-}
-
-.social-preview img,
-.social-preview video,
-.media-placeholder {
-  border-radius: 26px;
-  object-fit: cover;
-  background: white;
-  box-shadow: 0 22px 56px rgba(0, 58, 93, .12);
-}
-
-.media-placeholder {
+.platform-card {
   display: grid;
+  gap: 10px;
+}
+
+.platform-heading,
+.scheduled-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #24282c;
+  font-weight: 750;
+}
+
+.scheduled-line {
+  color: #30363a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ig-mark,
+.li-mark,
+.fb-mark,
+.x-mark,
+.yt-mark {
+  display: inline-grid;
   place-items: center;
-  padding: 28px;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
   color: white;
-  background: linear-gradient(145deg, rgba(0, 58, 93, .9), rgba(26, 117, 153, .78));
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.ig-mark {
+  background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af);
+}
+
+.li-mark {
+  background: #0a66c2;
+}
+
+.fb-mark {
+  background: #1877f2;
+}
+
+.x-mark {
+  background: #111;
+}
+
+.yt-mark {
+  background: #ff0033;
+}
+
+.social-card {
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 2px 9px rgba(0, 0, 0, .08);
+}
+
+.social-card-head {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.social-card-head.compact {
+  grid-template-columns: 38px minmax(0, 1fr);
+}
+
+.social-card-head img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 50%;
+}
+
+.social-card-head strong {
+  display: block;
+  color: #202124;
+  font-size: 16px;
+}
+
+.social-card-head small {
+  display: block;
+  margin-top: 2px;
+  color: #6b6f76;
+  font-size: 12px;
+}
+
+.social-card > p {
+  margin: 0;
+  padding: 0 16px 14px;
+  color: #202124;
+  font-size: 14px;
+  line-height: 1.38;
+}
+
+.social-card h3 {
+  margin: 14px 16px 8px;
+  color: #202124;
+  font-size: 18px;
+}
+
+.social-media {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #e9eef4;
+}
+
+.social-media.square img,
+.social-media.square video,
+.social-media.square .media-placeholder {
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.social-media.story img,
+.social-media.story video,
+.social-media.story .media-placeholder {
+  aspect-ratio: 9 / 16;
+  width: 76%;
+  max-height: 620px;
+}
+
+.social-media.landscape img,
+.social-media.landscape video,
+.social-media.landscape .media-placeholder,
+.youtube-media img,
+.youtube-media video,
+.youtube-media .media-placeholder {
+  aspect-ratio: 1200 / 628;
+  width: 100%;
+}
+
+.social-media img,
+.social-media video,
+.media-placeholder {
+  object-fit: cover;
+  background: #e9eef4;
+}
+
+.media-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: 28px;
+  color: #536f8f;
+  background: #e9eef4;
   text-align: center;
 }
 
@@ -607,7 +730,28 @@ dialog::backdrop {
 
 .media-placeholder strong {
   align-self: start;
-  font-size: 28px;
+  font-size: 22px;
+}
+
+.ig-actions,
+.social-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(0, 0, 0, .06);
+  color: #555b61;
+  font-weight: 700;
+}
+
+.ig-actions {
+  justify-content: flex-start;
+  font-size: 24px;
+}
+
+.ig-actions span:last-child {
+  margin-left: auto;
 }
 
 .detail-copy {
@@ -653,6 +797,57 @@ dialog::backdrop {
 .danger-action {
   color: #b42318;
   background: rgba(255, 255, 255, .54);
+}
+
+.content-review {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.content-review span,
+.approval-panel span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.content-review p {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid rgba(0, 58, 93, .08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .54);
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.approval-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid rgba(0, 58, 93, .08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .54);
+}
+
+.approval-panel strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--area-blue);
+  font-size: 20px;
+}
+
+.approval-panel.approved {
+  background: rgba(5, 206, 124, .12);
+}
+
+.approval-button {
+  min-width: 142px;
 }
 
 .detail-copy h2,
@@ -838,6 +1033,10 @@ legend {
     grid-template-columns: 1fr;
   }
 
+  .preview-scroll {
+    max-height: 52dvh;
+  }
+
   .social-preview {
     min-height: 420px;
   }
@@ -983,5 +1182,31 @@ legend {
 
   .detail-actions {
     padding-right: 44px;
+  }
+
+  .preview-scroll {
+    max-height: 48dvh;
+    padding: 22px 16px;
+  }
+
+  .platform-card {
+    gap: 8px;
+  }
+
+  .social-card-head {
+    padding: 12px;
+  }
+
+  .social-actions {
+    font-size: 13px;
+  }
+
+  .approval-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .approval-button {
+    width: 100%;
   }
 }
