@@ -71,14 +71,14 @@ select {
 }
 
 .main-logo {
-  width: 88px;
-  height: 62px;
+  width: 94px;
+  height: auto;
   object-fit: contain;
-  padding: 9px 10px;
-  border: 1px solid rgba(255, 255, 255, .82);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, .9);
-  box-shadow: 0 12px 30px rgba(0, 58, 93, .09);
+  padding: 8px 6px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .brand-list {
@@ -319,11 +319,25 @@ textarea {
 .week-controls select {
   min-width: 250px;
   height: 46px;
-  padding: 0 46px 0 18px;
+  padding: 0 56px 0 18px;
   border-radius: 999px;
   color: white;
   background: linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
   font-weight: 800;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, .9) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, .9) 50%, transparent 50%),
+    linear-gradient(180deg, rgba(0, 58, 93, .9), rgba(0, 58, 93, .82));
+  background-position:
+    calc(100% - 36px) 50%,
+    calc(100% - 28px) 50%,
+    0 0;
+  background-size:
+    8px 8px,
+    8px 8px,
+    100% 100%;
+  background-repeat: no-repeat;
 }
 
 .toolbar-meta {
