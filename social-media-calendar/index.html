@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Social Media Calendar</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="brand-rail" aria-label="Brands">
+        <div class="app-mark">SC</div>
+        <nav id="brandList" class="brand-list"></nav>
+        <button id="dashboardNotesButton" class="rail-button" type="button" title="Dashboard notes" aria-label="Dashboard notes">
+          <span>✎</span>
+        </button>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">2026 publishing calendar</p>
+            <h1 id="brandHeading">Social calendar</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="search">
+              <span>⌕</span>
+              <input id="searchInput" type="search" placeholder="Search posts, channels, captions">
+            </label>
+            <button id="todayButton" class="icon-button" type="button" title="Jump to today" aria-label="Jump to today">⌖</button>
+            <button id="newPostButton" class="primary-button" type="button">Add post</button>
+          </div>
+        </header>
+
+        <section class="calendar-toolbar" aria-label="Calendar controls">
+          <div class="month-picker">
+            <button id="previousMonth" class="icon-button" type="button" title="Previous month" aria-label="Previous month">‹</button>
+            <button id="monthLabel" class="month-button" type="button"></button>
+            <button id="nextMonth" class="icon-button" type="button" title="Next month" aria-label="Next month">›</button>
+          </div>
+          <div id="viewTabs" class="segmented" role="tablist" aria-label="Calendar view">
+            <button class="active" type="button" data-view="month">Month</button>
+            <button type="button" data-view="quarter">Quarter</button>
+            <button type="button" data-view="year">Year</button>
+          </div>
+        </section>
+
+        <section class="calendar-wrap" aria-label="Post calendar">
+          <div id="dateStrip" class="date-strip"></div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="postDialog" class="post-dialog">
+      <form method="dialog">
+        <button class="close-button" value="cancel" aria-label="Close">×</button>
+      </form>
+      <div id="postDialogContent"></div>
+    </dialog>
+
+    <dialog id="notesDialog" class="notes-dialog">
+      <form method="dialog">
+        <button class="close-button" value="cancel" aria-label="Close">×</button>
+      </form>
+      <div class="notes-header">
+        <p class="eyebrow">Dashboard notes</p>
+        <h2>Team notes</h2>
+      </div>
+      <textarea id="dashboardNotes" placeholder="Add campaign reminders, approvals, asset links, or team feedback."></textarea>
+      <button id="saveDashboardNotes" class="primary-button" type="button">Save notes</button>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
