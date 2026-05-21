@@ -34,7 +34,7 @@ const seedPosts = [
     title: "Course registration reminder",
     channels: ["IG", "FB"],
     status: "Scheduled",
-    format: "story",
+    format: "reel",
     owner: "Education",
     caption: "Last call to register for the next AREA Learn session. Highlight CE value and the registration deadline.",
     notes: "Story version needs sticker space at bottom.",
@@ -66,7 +66,7 @@ const seedPosts = [
     title: "Market insights clip",
     channels: ["X", "LinkedIn"],
     status: "Draft",
-    format: "landscape",
+    format: "fourFive",
     owner: "Policy",
     caption: "Short post linking to the latest market insight with one stat, one takeaway, and one link.",
     notes: "Needs final stat from the report.",
@@ -82,7 +82,7 @@ const seedPosts = [
     title: "AREA DRIVE testimonial",
     channels: ["IG", "FB"],
     status: "Approved",
-    format: "story",
+    format: "reel",
     owner: "Partnerships",
     caption: "Member testimonial about fuel savings and why the program is easy to use on the road.",
     notes: "Use captions on the video for silent viewing.",
@@ -111,6 +111,7 @@ const seedPosts = [
 let posts = loadPosts();
 let selectedBrand = "all";
 let selectedWeekStart = getMonday(today);
+let returnToPreviewPostId = null;
 
 const brandList = document.querySelector("#brandList");
 const calendarGrid = document.querySelector("#calendarGrid");
@@ -131,7 +132,11 @@ const postFormSubmit = document.querySelector("#postFormSubmit");
 
 function loadPosts() {
   const saved = JSON.parse(localStorage.getItem(postStorageKey) || "null");
-  return saved?.length ? saved : seedPosts;
+  const source = saved?.length ? saved : seedPosts;
+  return source.map((post) => ({
+    ...post,
+    format: normalizeFormat(post.format)
+  }));
 }
 
 function savePosts() {
@@ -193,6 +198,12 @@ function getVisiblePosts() {
 
 function getBrand(brandId) {
   return brands.find((brand) => brand.id === brandId) || brands[0];
+}
+
+function normalizeFormat(format) {
+  if (format === "story") return "reel";
+  if (format === "landscape") return "fourFive";
+  return format || "square";
 }
 
 function escapeHtml(value = "") {
@@ -343,6 +354,7 @@ function accountName(post, channel) {
 function platformPreview(post, channel) {
   const brand = getBrand(post.brandId);
   const media = mediaMarkup(post);
+  const format = normalizeFormat(post.format);
   const dateText = parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   const safeCaption = escapeHtml(post.caption);
   const safeTitle = escapeHtml(post.title);
@@ -359,7 +371,7 @@ function platformPreview(post, channel) {
             <strong>${account}</strong>
             <span>•••</span>
           </div>
-          <div class="social-media ${post.format}">${media}</div>
+          <div class="social-media ${format}">${media}</div>
           <div class="ig-actions"><span>♡</span><span>⌕</span><span>✈</span><span>▢</span></div>
           <p><strong>${account}</strong> ${safeCaption}</p>
         </div>
@@ -379,7 +391,7 @@ function platformPreview(post, channel) {
             <span>•••</span>
           </div>
           <p>${safeCaption}</p>
-          <div class="social-media linkedin-media ${post.format}">${media}</div>
+          <div class="social-media linkedin-media ${format}">${media}</div>
           <div class="social-actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
         </div>
       </article>
@@ -398,7 +410,7 @@ function platformPreview(post, channel) {
             <span>•••</span>
           </div>
           <p>${safeCaption}</p>
-          <div class="social-media x-media ${post.format}">${media}</div>
+          <div class="social-media x-media ${format}">${media}</div>
           <div class="social-actions"><span>Reply</span><span>Repost</span><span>Like</span><span>Share</span></div>
         </div>
       </article>
@@ -411,7 +423,7 @@ function platformPreview(post, channel) {
         <div class="platform-heading"><span class="yt-mark">▶</span><span>YouTube post</span></div>
         <div class="scheduled-line">Scheduled for ${dateText} ${post.time}</div>
         <div class="social-card">
-          <div class="social-media youtube-media landscape">${media}</div>
+          <div class="social-media youtube-media ${format}">${media}</div>
           <h3>${safeTitle}</h3>
           <div class="social-card-head compact">
             <img src="${brand.logo}" alt="${brand.name}">
@@ -434,7 +446,7 @@ function platformPreview(post, channel) {
           <span>•••</span>
         </div>
         <p>${safeCaption}</p>
-        <div class="social-media facebook-media ${post.format}">${media}</div>
+        <div class="social-media facebook-media ${format}">${media}</div>
         <div class="social-actions"><span>Like</span><span>Comment</span><span>Share</span></div>
       </div>
     </article>
@@ -480,11 +492,11 @@ function openPost(postId) {
 
 function formatLabel(format) {
   const labels = {
-    square: "1080 × 1080",
-    story: "1080 × 1920",
-    landscape: "1200 × 628"
+    square: "Square",
+    reel: "Reel",
+    fourFive: "4:5"
   };
-  return labels[format] || labels.square;
+  return labels[normalizeFormat(format)] || labels.square;
 }
 
 function openAddPostDialog(date = dateKey(today), postId = null) {
@@ -502,7 +514,7 @@ function openAddPostDialog(date = dateKey(today), postId = null) {
     addPostForm.elements.time.value = post.time;
     addPostForm.elements.owner.value = post.owner;
     addPostForm.elements.status.value = post.status;
-    addPostForm.elements.format.value = post.format;
+    addPostForm.elements.format.value = normalizeFormat(post.format);
     addPostForm.elements.title.value = post.title;
     addPostForm.elements.caption.value = post.caption;
     addPostForm.elements.notes.value = post.notes || "";
@@ -543,7 +555,7 @@ function handleAddPost(event) {
     title: data.get("title"),
     channels,
     status: data.get("status"),
-    format: data.get("format"),
+    format: normalizeFormat(data.get("format")),
     owner: data.get("owner"),
     caption: data.get("caption"),
     notes: data.get("notes"),
@@ -564,6 +576,10 @@ function handleAddPost(event) {
   savePosts();
   addPostDialog.close();
   renderCalendar();
+  if (existingPost || returnToPreviewPostId === nextPost.id) {
+    returnToPreviewPostId = null;
+    openPost(nextPost.id);
+  }
 }
 
 function tintForBrand(brandId) {
@@ -643,6 +659,7 @@ postDialog.addEventListener("click", (event) => {
 
   if (editButton) {
     const postId = Number(editButton.dataset.editPost);
+    returnToPreviewPostId = postId;
     postDialog.close();
     openAddPostDialog(dateKey(today), postId);
   }

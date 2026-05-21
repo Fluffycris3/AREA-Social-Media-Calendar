@@ -15,7 +15,7 @@ CREATE TABLE posts (
   status TEXT NOT NULL,
   caption TEXT NOT NULL,
   owner TEXT NOT NULL,
-  format TEXT NOT NULL CHECK (format IN ('square', 'story', 'landscape')),
+  format TEXT NOT NULL CHECK (format IN ('square', 'reel', 'fourFive')),
   media_type TEXT CHECK (media_type IN ('image', 'video')),
   media_url TEXT,
   card_color TEXT,
