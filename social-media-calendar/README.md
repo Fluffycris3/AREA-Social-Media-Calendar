@@ -1,15 +1,16 @@
-# Social Media Calendar Dashboard
+# AREA Social Calendar
 
-Apple-inspired social media calendar for planning 2026 brand content. The prototype is dependency-free: open `index.html` directly or serve the folder locally.
+Internal AREA social media planning dashboard for the 2026 content calendar.
 
-## Features
+## What is included
 
-- Horizontal 2026 calendar with month, quarter, and year views.
-- Brand selector rail on the left that changes the calendar content.
-- Post cards with image previews, channel, time, owner, status, and caption.
-- Click any post to view content details and save post-specific notes.
-- Dashboard notes button for general team notes.
-- SQL-ready schema and seed data in `database/`.
+- AREA-branded dashboard using the supplied logos.
+- Default all-brand view with AREA, AREA Learn, AREA Wireless, and AREA DRIVE.
+- Monday-Friday calendar grid with times down the left side.
+- Search with clickable preview suggestions.
+- Add-post form for title, brand, date, time, owner, status, channels, content, notes, image upload, and video upload.
+- Post detail preview with social media sizing: `1080 x 1080`, `1080 x 1920`, or `1200 x 628`.
+- SQL-ready schema in `database/schema.sql` with brands, posts, post channels, post notes, and dashboard notes.
 
 ## Run locally
 
@@ -22,25 +23,26 @@ python3 -m http.server 8080
 
 Then visit `http://localhost:8080`.
 
-## SQL integration path
+## GitHub Pages
 
-The current prototype uses in-browser sample data and `localStorage` for notes. To connect a backend:
+If the files are inside a folder named `social-media-calendar`, the live URL will be:
 
-1. Create the SQL tables from `database/schema.sql`.
-2. Load sample content from `database/seed.sql`.
-3. Replace the `brands` and `posts` arrays in `app.js` with API calls.
-4. Save post notes to `post_notes` and dashboard notes to `dashboard_notes`.
-
-## Publish to GitHub
-
-```bash
-cd "/Users/cmera/Documents/New project/social-media-calendar"
-git init
-git add .
-git commit -m "Create social media calendar dashboard"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-git push -u origin main
+```text
+https://fluffycris3.github.io/AREA-Social-Media-Calendar/social-media-calendar/
 ```
 
-For GitHub Pages, enable Pages in the repository settings and set the source to the `main` branch root.
+If `index.html`, `styles.css`, `app.js`, `assets/`, and `database/` are moved to the repository root, the live URL will be:
+
+```text
+https://fluffycris3.github.io/AREA-Social-Media-Calendar/
+```
+
+## SQL integration path
+
+The prototype currently stores added posts and notes in `localStorage`. For a production internal tool:
+
+1. Create tables from `database/schema.sql`.
+2. Load sample content from `database/seed.sql`.
+3. Replace the in-browser `posts` array in `app.js` with API calls.
+4. Store uploaded media in a file bucket or server directory and save the public/internal URL in `posts.media_url`.
+5. Save channels to `post_channels`, post notes to `post_notes`, and dashboard notes to `dashboard_notes`.

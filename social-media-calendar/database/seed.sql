@@ -1,21 +1,28 @@
-INSERT INTO brands (id, name, logo_text, color) VALUES
-  ('luma', 'Luma Skincare', 'LU', 'linear-gradient(145deg, #f6b4c9, #be6b8b)'),
-  ('north', 'North & Co.', 'NC', 'linear-gradient(145deg, #9fc4ee, #426d9d)'),
-  ('terra', 'Terra Home', 'TH', 'linear-gradient(145deg, #afdfbf, #4c8767)'),
-  ('atlas', 'Atlas Studio', 'AS', 'linear-gradient(145deg, #f1d765, #a67b2f)');
+INSERT INTO brands (id, name, logo_path, accent_color) VALUES
+  ('area', 'AREA', './assets/area-logo.svg', '#003a5d'),
+  ('learn', 'AREA Learn', './assets/area-learn-logo.svg', '#05ce7c'),
+  ('wireless', 'AREA Wireless', './assets/area-wireless-logo.svg', '#03846d'),
+  ('drive', 'AREA DRIVE', './assets/area-drive-logo.svg', '#1a7599');
 
-INSERT INTO posts (id, brand_id, publish_date, publish_time, title, channel, status, caption, thumbnail_url, card_color, audience, owner) VALUES
-  (1, 'luma', '2026-01-07', '09:00', 'Winter glow launch', 'IG', 'Ready', 'Hydrated skin is the quiet luxury of January. Meet the new barrier cream, made for frosty mornings and late-night routines.', 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80', '#f1d3df', 'Skincare loyalists', 'Mia'),
-  (2, 'luma', '2026-01-14', '12:30', 'Creator routine reel', 'TT', 'Review', 'A 22-second routine showing cleanser, serum, cream, and SPF with a soft voiceover and pinned product links.', NULL, '#c8dcf7', 'New customers', 'Theo'),
-  (3, 'north', '2026-01-08', '08:00', 'Founder note', 'LI', 'Draft', 'A calm reflection on building better client onboarding rituals for the new year.', NULL, '#f4df78', 'B2B prospects', 'Avery'),
-  (4, 'north', '2026-01-21', '16:00', 'Case study carousel', 'IG', 'Scheduled', 'Five slides unpacking how one client reduced campaign review time by 38 percent.', NULL, '#d9d5cb', 'Marketing leads', 'Sam'),
-  (5, 'terra', '2026-01-10', '10:30', 'Kitchen reveal', 'IG', 'Ready', 'Warm woods, practical storage, and the small design choices that make weekday cooking easier.', 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80', '#bddfc7', 'Home renovators', 'Jules'),
-  (6, 'terra', '2026-01-19', '14:00', 'Design tips thread', 'X', 'Draft', 'A practical thread on choosing finishes that age well instead of chasing fast trends.', NULL, '#f1d3df', 'DIY planners', 'Nora'),
-  (7, 'atlas', '2026-01-13', '11:00', 'Brand refresh teaser', 'IG', 'Scheduled', 'A cropped first look at the new identity system with motion, type, and color details.', NULL, '#f4df78', 'Creative directors', 'Rae'),
-  (8, 'atlas', '2026-01-27', '13:30', 'Process breakdown', 'LI', 'Review', 'A short written breakdown of naming, positioning, and design system handoff.', NULL, '#c8dcf7', 'Startup founders', 'Kai');
+INSERT INTO posts (id, brand_id, publish_date, publish_time, title, status, caption, owner, format, media_type, media_url, card_color) VALUES
+  (101, 'area', '2026-05-18', '09:00', 'Weekly member update', 'Approved', 'A clean Monday update for Alberta REALTORS with reminders, deadlines, and links to member resources.', 'Communications', 'square', 'image', NULL, '#d8ecf5'),
+  (102, 'learn', '2026-05-19', '10:30', 'Course registration reminder', 'Scheduled', 'Last call to register for the next AREA Learn session. Highlight CE value and the registration deadline.', 'Education', 'story', 'image', NULL, '#dbf9ec'),
+  (103, 'wireless', '2026-05-20', '13:00', 'Wireless savings carousel', 'In review', 'Show the Rogers offer in three clear slides: plan value, member benefit, and how to activate.', 'Partnerships', 'square', 'image', NULL, '#d8f2ed'),
+  (104, 'area', '2026-05-21', '08:30', 'Market insights clip', 'Draft', 'Short post linking to the latest market insight with one stat, one takeaway, and one link.', 'Policy', 'landscape', 'video', NULL, '#cfe4ef'),
+  (105, 'drive', '2026-05-21', '15:00', 'AREA DRIVE testimonial', 'Approved', 'Member testimonial about fuel savings and why the program is easy to use on the road.', 'Partnerships', 'story', 'video', NULL, '#d6edf7'),
+  (106, 'learn', '2026-05-22', '11:30', 'Instructor spotlight', 'Draft', 'Introduce the instructor, their expertise, and why members should join the upcoming class.', 'Education', 'square', 'image', NULL, '#e0f8ee');
+
+INSERT INTO post_channels (post_id, channel) VALUES
+  (101, 'IG'), (101, 'FB'), (101, 'LinkedIn'),
+  (102, 'IG'), (102, 'FB'),
+  (103, 'IG'), (103, 'LinkedIn'),
+  (104, 'X'), (104, 'LinkedIn'),
+  (105, 'IG'), (105, 'FB'),
+  (106, 'IG'), (106, 'FB'), (106, 'LinkedIn');
 
 INSERT INTO post_notes (post_id, body, author_name) VALUES
-  (1, 'Confirm final product claims before publishing.', 'Mia'),
-  (2, 'Needs legal review on before/after framing.', 'Theo'),
-  (3, 'Add two customer proof points.', 'Avery'),
-  (4, 'Export final carousel at 1080x1350.', 'Sam');
+  (101, 'Use the blue AREA frame and keep the CTA short.', 'Communications'),
+  (102, 'Story version needs sticker space at bottom.', 'Education'),
+  (103, 'Confirm partner logo spacing before approval.', 'Partnerships'),
+  (104, 'Needs final stat from the report.', 'Policy'),
+  (105, 'Use captions on the video for silent viewing.', 'Partnerships');

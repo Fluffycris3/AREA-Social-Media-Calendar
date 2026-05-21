@@ -3,50 +3,51 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Social Media Calendar</title>
+    <title>AREA Social Calendar</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <div class="app-shell">
-      <aside class="brand-rail" aria-label="Brands">
-        <div class="app-mark">SC</div>
+      <aside class="brand-rail" aria-label="AREA brands">
+        <div class="rail-top">
+          <img src="./assets/area-logo.svg" alt="AREA" class="main-logo">
+        </div>
         <nav id="brandList" class="brand-list"></nav>
-        <button id="dashboardNotesButton" class="rail-button" type="button" title="Dashboard notes" aria-label="Dashboard notes">
-          <span>✎</span>
-        </button>
+        <button id="dashboardNotesButton" class="rail-button" type="button" title="Dashboard notes" aria-label="Dashboard notes">Notes</button>
       </aside>
 
       <main class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">2026 publishing calendar</p>
-            <h1 id="brandHeading">Social calendar</h1>
+            <p class="eyebrow">Internal planning dashboard</p>
+            <h1>AREA Social Calendar</h1>
           </div>
           <div class="topbar-actions">
-            <label class="search">
-              <span>⌕</span>
-              <input id="searchInput" type="search" placeholder="Search posts, channels, captions">
-            </label>
-            <button id="todayButton" class="icon-button" type="button" title="Jump to today" aria-label="Jump to today">⌖</button>
+            <div class="search-wrap">
+              <label class="search">
+                <span aria-hidden="true">⌕</span>
+                <input id="searchInput" type="search" placeholder="Search posts, channels, owners, notes">
+              </label>
+              <div id="searchSuggestions" class="search-suggestions" hidden></div>
+            </div>
+            <button id="todayButton" class="ghost-button" type="button">Today</button>
             <button id="newPostButton" class="primary-button" type="button">Add post</button>
           </div>
         </header>
 
         <section class="calendar-toolbar" aria-label="Calendar controls">
-          <div class="month-picker">
-            <button id="previousMonth" class="icon-button" type="button" title="Previous month" aria-label="Previous month">‹</button>
-            <button id="monthLabel" class="month-button" type="button"></button>
-            <button id="nextMonth" class="icon-button" type="button" title="Next month" aria-label="Next month">›</button>
+          <div class="week-controls">
+            <button id="previousWeek" class="icon-button" type="button" title="Previous week" aria-label="Previous week">‹</button>
+            <select id="weekSelect" aria-label="Select calendar week"></select>
+            <button id="nextWeek" class="icon-button" type="button" title="Next week" aria-label="Next week">›</button>
           </div>
-          <div id="viewTabs" class="segmented" role="tablist" aria-label="Calendar view">
-            <button class="active" type="button" data-view="month">Month</button>
-            <button type="button" data-view="quarter">Quarter</button>
-            <button type="button" data-view="year">Year</button>
+          <div class="toolbar-meta">
+            <span id="visibleBrandLabel">All AREA brands</span>
+            <span id="postCountLabel">0 posts</span>
           </div>
         </section>
 
-        <section class="calendar-wrap" aria-label="Post calendar">
-          <div id="dateStrip" class="date-strip"></div>
+        <section class="calendar-wrap" aria-label="Monday to Friday social calendar">
           <div id="calendarGrid" class="calendar-grid"></div>
         </section>
       </main>
@@ -57,6 +58,84 @@
         <button class="close-button" value="cancel" aria-label="Close">×</button>
       </form>
       <div id="postDialogContent"></div>
+    </dialog>
+
+    <dialog id="addPostDialog" class="add-post-dialog">
+      <form id="addPostForm">
+        <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
+        <div class="form-heading">
+          <p class="eyebrow">Create content</p>
+          <h2>Add a social post</h2>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Brand
+            <select name="brandId" required></select>
+          </label>
+          <label>
+            Date
+            <input name="date" type="date" min="2026-01-01" max="2026-12-31" required>
+          </label>
+          <label>
+            Time
+            <input name="time" type="time" value="09:00" required>
+          </label>
+          <label>
+            Owner
+            <input name="owner" type="text" placeholder="Name" required>
+          </label>
+          <label>
+            Status
+            <select name="status" required>
+              <option>Draft</option>
+              <option>In review</option>
+              <option>Approved</option>
+              <option>Scheduled</option>
+              <option>Posted</option>
+            </select>
+          </label>
+          <label>
+            Format
+            <select name="format" required>
+              <option value="square">1080 × 1080</option>
+              <option value="story">1080 × 1920</option>
+              <option value="landscape">1200 × 628</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Post title
+          <input name="title" type="text" placeholder="Campaign, announcement, reminder" required>
+        </label>
+
+        <fieldset>
+          <legend>Channels</legend>
+          <label><input type="checkbox" name="channels" value="IG" checked> IG</label>
+          <label><input type="checkbox" name="channels" value="FB"> FB</label>
+          <label><input type="checkbox" name="channels" value="X"> X</label>
+          <label><input type="checkbox" name="channels" value="LinkedIn"> LinkedIn</label>
+          <label><input type="checkbox" name="channels" value="YouTube"> YouTube</label>
+        </fieldset>
+
+        <label>
+          Content
+          <textarea name="caption" placeholder="Paste the caption, talking points, approval context, or post copy." required></textarea>
+        </label>
+
+        <label>
+          Image or video
+          <input name="media" type="file" accept="image/*,video/*">
+        </label>
+
+        <label>
+          Notes
+          <textarea name="notes" placeholder="Internal notes for co-workers, approvals, links, or reminders."></textarea>
+        </label>
+
+        <button class="primary-button" type="submit">Save post</button>
+      </form>
     </dialog>
 
     <dialog id="notesDialog" class="notes-dialog">

@@ -1,154 +1,139 @@
 const brands = [
-  { id: "luma", name: "Luma Skincare", logo: "LU", color: "linear-gradient(145deg, #f6b4c9, #be6b8b)" },
-  { id: "north", name: "North & Co.", logo: "NC", color: "linear-gradient(145deg, #9fc4ee, #426d9d)" },
-  { id: "terra", name: "Terra Home", logo: "TH", color: "linear-gradient(145deg, #afdfbf, #4c8767)" },
-  { id: "atlas", name: "Atlas Studio", logo: "AS", color: "linear-gradient(145deg, #f1d765, #a67b2f)" }
+  { id: "area", name: "AREA", logo: "./assets/area-logo.svg", accent: "#003a5d" },
+  { id: "learn", name: "AREA Learn", logo: "./assets/area-learn-logo.svg", accent: "#05ce7c" },
+  { id: "wireless", name: "AREA Wireless", logo: "./assets/area-wireless-logo.svg", accent: "#03846d" },
+  { id: "drive", name: "AREA DRIVE", logo: "./assets/area-drive-logo.svg", accent: "#1a7599" }
 ];
 
-const posts = [
+const today = new Date("2026-05-21T12:00:00");
+const postStorageKey = "area-social-calendar-posts";
+const notesStorageKey = "area-social-calendar-dashboard-notes";
+
+const seedPosts = [
   {
-    id: 1,
-    brandId: "luma",
-    date: "2026-01-07",
+    id: 101,
+    brandId: "area",
+    date: "2026-05-18",
     time: "09:00",
-    title: "Winter glow launch",
-    channel: "IG",
-    status: "Ready",
-    color: "#f1d3df",
-    thumb: "linear-gradient(135deg, rgba(255,255,255,.2), rgba(255,255,255,.04)), url('https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80')",
-    caption: "Hydrated skin is the quiet luxury of January. Meet the new barrier cream, made for frosty mornings and late-night routines.",
-    audience: "Skincare loyalists",
-    owner: "Mia",
-    notes: "Confirm final product claims before publishing."
+    title: "Weekly member update",
+    channels: ["IG", "FB", "LinkedIn"],
+    status: "Approved",
+    format: "square",
+    owner: "Communications",
+    caption: "A clean Monday update for Alberta REALTORS with reminders, deadlines, and links to member resources.",
+    notes: "Use the blue AREA frame and keep the CTA short.",
+    mediaType: "image",
+    mediaUrl: "",
+    color: "#d8ecf5"
   },
   {
-    id: 2,
-    brandId: "luma",
-    date: "2026-01-14",
-    time: "12:30",
-    title: "Creator routine reel",
-    channel: "TT",
-    status: "Review",
-    color: "#c8dcf7",
-    thumb: "linear-gradient(135deg, #dfeaff, #9bb9e5)",
-    caption: "A 22-second routine showing cleanser, serum, cream, and SPF with a soft voiceover and pinned product links.",
-    audience: "New customers",
-    owner: "Theo",
-    notes: "Needs legal review on before/after framing."
-  },
-  {
-    id: 3,
-    brandId: "north",
-    date: "2026-01-08",
-    time: "08:00",
-    title: "Founder note",
-    channel: "LI",
-    status: "Draft",
-    color: "#f4df78",
-    thumb: "linear-gradient(135deg, #202326, #748ba1)",
-    caption: "A calm reflection on building better client onboarding rituals for the new year.",
-    audience: "B2B prospects",
-    owner: "Avery",
-    notes: "Add two customer proof points."
-  },
-  {
-    id: 4,
-    brandId: "north",
-    date: "2026-01-21",
-    time: "16:00",
-    title: "Case study carousel",
-    channel: "IG",
-    status: "Scheduled",
-    color: "#d9d5cb",
-    thumb: "linear-gradient(135deg, #efece5, #b9b2a7)",
-    caption: "Five slides unpacking how one client reduced campaign review time by 38 percent.",
-    audience: "Marketing leads",
-    owner: "Sam",
-    notes: "Export final carousel at 1080x1350."
-  },
-  {
-    id: 5,
-    brandId: "terra",
-    date: "2026-01-10",
+    id: 102,
+    brandId: "learn",
+    date: "2026-05-19",
     time: "10:30",
-    title: "Kitchen reveal",
-    channel: "IG",
-    status: "Ready",
-    color: "#bddfc7",
-    thumb: "linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.05)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80')",
-    caption: "Warm woods, practical storage, and the small design choices that make weekday cooking easier.",
-    audience: "Home renovators",
-    owner: "Jules",
-    notes: "Tag cabinet partner after approval."
-  },
-  {
-    id: 6,
-    brandId: "terra",
-    date: "2026-01-19",
-    time: "14:00",
-    title: "Design tips thread",
-    channel: "X",
-    status: "Draft",
-    color: "#f1d3df",
-    thumb: "linear-gradient(135deg, #d9eadf, #8fbfa2)",
-    caption: "A practical thread on choosing finishes that age well instead of chasing fast trends.",
-    audience: "DIY planners",
-    owner: "Nora",
-    notes: ""
-  },
-  {
-    id: 7,
-    brandId: "atlas",
-    date: "2026-01-13",
-    time: "11:00",
-    title: "Brand refresh teaser",
-    channel: "IG",
+    title: "Course registration reminder",
+    channels: ["IG", "FB"],
     status: "Scheduled",
-    color: "#f4df78",
-    thumb: "linear-gradient(135deg, #f5dd68, #f09f77 45%, #2f2f36)",
-    caption: "A cropped first look at the new identity system with motion, type, and color details.",
-    audience: "Creative directors",
-    owner: "Rae",
-    notes: "Hold until client posts first."
+    format: "story",
+    owner: "Education",
+    caption: "Last call to register for the next AREA Learn session. Highlight CE value and the registration deadline.",
+    notes: "Story version needs sticker space at bottom.",
+    mediaType: "image",
+    mediaUrl: "",
+    color: "#dbf9ec"
   },
   {
-    id: 8,
-    brandId: "atlas",
-    date: "2026-01-27",
-    time: "13:30",
-    title: "Process breakdown",
-    channel: "LI",
-    status: "Review",
-    color: "#c8dcf7",
-    thumb: "linear-gradient(135deg, #c8dcf7, #f4df78)",
-    caption: "A short written breakdown of naming, positioning, and design system handoff.",
-    audience: "Startup founders",
-    owner: "Kai",
-    notes: "Add dashboard mockup image."
+    id: 103,
+    brandId: "wireless",
+    date: "2026-05-20",
+    time: "13:00",
+    title: "Wireless savings carousel",
+    channels: ["IG", "LinkedIn"],
+    status: "In review",
+    format: "square",
+    owner: "Partnerships",
+    caption: "Show the Rogers offer in three clear slides: plan value, member benefit, and how to activate.",
+    notes: "Confirm partner logo spacing before approval.",
+    mediaType: "image",
+    mediaUrl: "",
+    color: "#d8f2ed"
+  },
+  {
+    id: 104,
+    brandId: "area",
+    date: "2026-05-21",
+    time: "08:30",
+    title: "Market insights clip",
+    channels: ["X", "LinkedIn"],
+    status: "Draft",
+    format: "landscape",
+    owner: "Policy",
+    caption: "Short post linking to the latest market insight with one stat, one takeaway, and one link.",
+    notes: "Needs final stat from the report.",
+    mediaType: "video",
+    mediaUrl: "",
+    color: "#cfe4ef"
+  },
+  {
+    id: 105,
+    brandId: "drive",
+    date: "2026-05-21",
+    time: "15:00",
+    title: "AREA DRIVE testimonial",
+    channels: ["IG", "FB"],
+    status: "Approved",
+    format: "story",
+    owner: "Partnerships",
+    caption: "Member testimonial about fuel savings and why the program is easy to use on the road.",
+    notes: "Use captions on the video for silent viewing.",
+    mediaType: "video",
+    mediaUrl: "",
+    color: "#d6edf7"
+  },
+  {
+    id: 106,
+    brandId: "learn",
+    date: "2026-05-22",
+    time: "11:30",
+    title: "Instructor spotlight",
+    channels: ["IG", "FB", "LinkedIn"],
+    status: "Draft",
+    format: "square",
+    owner: "Education",
+    caption: "Introduce the instructor, their expertise, and why members should join the upcoming class.",
+    notes: "Waiting on headshot.",
+    mediaType: "image",
+    mediaUrl: "",
+    color: "#e0f8ee"
   }
 ];
 
-let selectedBrand = brands[0].id;
-let selectedDate = new Date("2026-01-07T12:00:00");
-let currentView = "month";
-
-const storageKey = "social-calendar-post-notes";
-const dashboardNotesKey = "social-calendar-dashboard-notes";
-const savedPostNotes = JSON.parse(localStorage.getItem(storageKey) || "{}");
+let posts = loadPosts();
+let selectedBrand = "all";
+let selectedWeekStart = getMonday(today);
 
 const brandList = document.querySelector("#brandList");
-const brandHeading = document.querySelector("#brandHeading");
-const dateStrip = document.querySelector("#dateStrip");
 const calendarGrid = document.querySelector("#calendarGrid");
-const monthLabel = document.querySelector("#monthLabel");
+const weekSelect = document.querySelector("#weekSelect");
 const searchInput = document.querySelector("#searchInput");
+const searchSuggestions = document.querySelector("#searchSuggestions");
 const postDialog = document.querySelector("#postDialog");
 const postDialogContent = document.querySelector("#postDialogContent");
+const addPostDialog = document.querySelector("#addPostDialog");
+const addPostForm = document.querySelector("#addPostForm");
+const dashboardNotesButton = document.querySelector("#dashboardNotesButton");
 const notesDialog = document.querySelector("#notesDialog");
 const dashboardNotes = document.querySelector("#dashboardNotes");
+const visibleBrandLabel = document.querySelector("#visibleBrandLabel");
+const postCountLabel = document.querySelector("#postCountLabel");
 
-function formatMonth(date) {
-  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+function loadPosts() {
+  const saved = JSON.parse(localStorage.getItem(postStorageKey) || "null");
+  return saved?.length ? saved : seedPosts;
+}
+
+function savePosts() {
+  localStorage.setItem(postStorageKey, JSON.stringify(posts));
 }
 
 function dateKey(date) {
@@ -159,136 +144,269 @@ function parseDate(value) {
   return new Date(`${value}T12:00:00`);
 }
 
-function getVisibleDays() {
-  const year = 2026;
-  if (currentView === "year") {
-    return Array.from({ length: 365 }, (_, index) => new Date(year, 0, index + 1, 12));
-  }
-
-  if (currentView === "quarter") {
-    const quarterStart = Math.floor(selectedDate.getMonth() / 3) * 3;
-    const start = new Date(year, quarterStart, 1, 12);
-    const end = new Date(year, quarterStart + 3, 0, 12);
-    const days = [];
-    for (let day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
-      days.push(new Date(day));
-    }
-    return days;
-  }
-
-  const start = new Date(year, selectedDate.getMonth(), 1, 12);
-  const end = new Date(year, selectedDate.getMonth() + 1, 0, 12);
-  const days = [];
-  for (let day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
-    days.push(new Date(day));
-  }
-  return days;
+function getMonday(date) {
+  const next = new Date(date);
+  const day = next.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  next.setDate(next.getDate() + diff);
+  next.setHours(12, 0, 0, 0);
+  return next;
 }
 
-function getFilteredPosts() {
+function addDays(date, amount) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + amount);
+  return next;
+}
+
+function formatWeekLabel(monday) {
+  const friday = addDays(monday, 4);
+  return `${monday.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${friday.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+}
+
+function getWeekdays() {
+  return Array.from({ length: 5 }, (_, index) => addDays(selectedWeekStart, index));
+}
+
+function getVisiblePosts() {
   const query = searchInput.value.trim().toLowerCase();
+  const weekKeys = new Set(getWeekdays().map(dateKey));
   return posts
-    .map((post) => ({ ...post, notes: savedPostNotes[post.id] ?? post.notes }))
-    .filter((post) => post.brandId === selectedBrand)
+    .filter((post) => weekKeys.has(post.date))
+    .filter((post) => selectedBrand === "all" || post.brandId === selectedBrand)
     .filter((post) => {
       if (!query) return true;
-      return [post.title, post.caption, post.channel, post.status, post.owner, post.notes]
-        .join(" ")
-        .toLowerCase()
-        .includes(query);
-    });
+      return [
+        post.title,
+        post.caption,
+        post.owner,
+        post.status,
+        post.notes,
+        post.channels.join(" "),
+        getBrand(post.brandId).name
+      ].join(" ").toLowerCase().includes(query);
+    })
+    .sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+}
+
+function getBrand(brandId) {
+  return brands.find((brand) => brand.id === brandId) || brands[0];
 }
 
 function renderBrands() {
-  brandList.innerHTML = brands.map((brand) => `
-    <button class="brand-logo ${brand.id === selectedBrand ? "active" : ""}" style="--brand-color: ${brand.color}" type="button" data-brand-id="${brand.id}" title="${brand.name}" aria-label="${brand.name}">
-      <span>${brand.logo}</span>
-    </button>
-  `).join("");
+  const items = [
+    `<button class="brand-logo ${selectedBrand === "all" ? "active" : ""}" type="button" data-brand-id="all" title="All AREA brands"><span>All</span></button>`,
+    ...brands.map((brand) => `
+      <button class="brand-logo ${brand.id === selectedBrand ? "active" : ""}" style="--brand-accent: ${brand.accent}" type="button" data-brand-id="${brand.id}" title="${brand.name}">
+        <img src="${brand.logo}" alt="${brand.name}">
+      </button>
+    `)
+  ];
+  brandList.innerHTML = items.join("");
+}
+
+function renderWeekOptions() {
+  const yearStart = getMonday(new Date("2026-01-01T12:00:00"));
+  const options = [];
+  for (let index = 0; index < 54; index += 1) {
+    const monday = addDays(yearStart, index * 7);
+    if (monday.getFullYear() > 2026 && addDays(monday, 4).getFullYear() > 2026) continue;
+    options.push(`<option value="${dateKey(monday)}">${formatWeekLabel(monday)}</option>`);
+  }
+  weekSelect.innerHTML = options.join("");
+  weekSelect.value = dateKey(selectedWeekStart);
 }
 
 function renderCalendar() {
-  const brand = brands.find((item) => item.id === selectedBrand);
-  const days = getVisibleDays();
-  const filteredPosts = getFilteredPosts();
-  brandHeading.textContent = brand.name;
-  monthLabel.textContent = currentView === "quarter"
-    ? `Q${Math.floor(selectedDate.getMonth() / 3) + 1} 2026`
-    : currentView === "year" ? "2026" : formatMonth(selectedDate);
+  const weekdays = getWeekdays();
+  const visiblePosts = getVisiblePosts();
+  const times = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
-  dateStrip.innerHTML = days.map((day) => {
-    const active = dateKey(day) === dateKey(selectedDate);
-    return `
-      <button class="date-pill ${active ? "active" : ""}" type="button" data-date="${dateKey(day)}">
-        <span class="weekday">${day.toLocaleDateString("en-US", { weekday: "short" })}</span>
-        <span class="day">${day.getDate()}</span>
+  visibleBrandLabel.textContent = selectedBrand === "all" ? "All AREA brands" : getBrand(selectedBrand).name;
+  postCountLabel.textContent = `${visiblePosts.length} ${visiblePosts.length === 1 ? "post" : "posts"}`;
+
+  const header = `
+    <div class="time-corner">Time</div>
+    ${weekdays.map((day) => `
+      <button class="day-head ${dateKey(day) === dateKey(today) ? "today" : ""}" type="button" data-jump-date="${dateKey(day)}">
+        <span>${day.toLocaleDateString("en-US", { weekday: "long" })}</span>
+        <strong>${day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</strong>
       </button>
-    `;
-  }).join("");
+    `).join("")}
+  `;
 
-  calendarGrid.innerHTML = days.map((day) => {
-    const key = dateKey(day);
-    const dayPosts = filteredPosts.filter((post) => post.date === key);
-    return `
-      <article class="day-column ${key === dateKey(selectedDate) ? "active" : ""}">
-        <div class="day-label">${day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</div>
-        ${dayPosts.length ? dayPosts.map(renderPostCard).join("") : `<div class="empty-state">Open</div>`}
-      </article>
-    `;
-  }).join("");
+  const rows = times.map((time) => `
+    <div class="time-label">${time}</div>
+    ${weekdays.map((day) => renderCell(day, time, visiblePosts)).join("")}
+  `).join("");
 
-  const activePill = dateStrip.querySelector(".date-pill.active");
-  activePill?.scrollIntoView({ inline: "center", block: "nearest" });
+  calendarGrid.innerHTML = header + rows;
+}
+
+function renderCell(day, time, visiblePosts) {
+  const key = dateKey(day);
+  const hour = Number(time.slice(0, 2));
+  const cellPosts = visiblePosts.filter((post) => {
+    const postHour = Number(post.time.slice(0, 2));
+    return post.date === key && postHour === hour;
+  });
+
+  return `
+    <div class="calendar-cell ${key === dateKey(today) ? "today-column" : ""}">
+      ${cellPosts.map(renderPostCard).join("")}
+    </div>
+  `;
 }
 
 function renderPostCard(post) {
+  const brand = getBrand(post.brandId);
   return `
-    <button class="post-card" type="button" data-post-id="${post.id}" style="--post-color: ${post.color}; --thumb: ${post.thumb}">
-      <div class="post-topline">
-        <span class="channel">${post.channel}</span>
-        <span class="status">${post.status}</span>
-      </div>
-      <h3>${post.title}</h3>
-      <p>${post.caption}</p>
-      <div class="thumb" aria-hidden="true"></div>
-      <div class="post-meta">
-        <span>${post.time}</span>
-        <span>${post.owner}</span>
-      </div>
+    <button class="post-card" type="button" data-post-id="${post.id}" style="--post-color: ${post.color}; --brand-accent: ${brand.accent}">
+      <span class="brand-dot"></span>
+      <span class="post-time">${post.time}</span>
+      <strong>${post.title}</strong>
+      <span>${brand.name}</span>
+      <span class="channel-row">${post.channels.map((channel) => `<em>${channel}</em>`).join("")}</span>
+      <small>${post.status} · ${post.owner}</small>
     </button>
   `;
 }
 
+function renderSuggestions() {
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) {
+    searchSuggestions.hidden = true;
+    searchSuggestions.innerHTML = "";
+    renderCalendar();
+    return;
+  }
+
+  const matches = posts
+    .filter((post) => [
+      post.title,
+      post.caption,
+      post.owner,
+      post.status,
+      post.channels.join(" "),
+      getBrand(post.brandId).name
+    ].join(" ").toLowerCase().includes(query))
+    .slice(0, 5);
+
+  searchSuggestions.hidden = matches.length === 0;
+  searchSuggestions.innerHTML = matches.map((post) => `
+    <button type="button" data-suggestion-id="${post.id}">
+      <strong>${post.title}</strong>
+      <span>${getBrand(post.brandId).name} · ${post.date} · ${post.channels.join(", ")}</span>
+    </button>
+  `).join("");
+  renderCalendar();
+}
+
+function mediaMarkup(post) {
+  if (post.mediaUrl && post.mediaType === "video") {
+    return `<video src="${post.mediaUrl}" controls></video>`;
+  }
+  if (post.mediaUrl) {
+    return `<img src="${post.mediaUrl}" alt="${post.title}">`;
+  }
+  return `<div class="media-placeholder"><span>${getBrand(post.brandId).name}</span><strong>${post.title}</strong></div>`;
+}
+
 function openPost(postId) {
-  const post = getFilteredPosts().find((item) => item.id === postId) || posts.find((item) => item.id === postId);
-  const brand = brands.find((item) => item.id === post.brandId);
+  const post = posts.find((item) => item.id === postId);
+  if (!post) return;
+  const brand = getBrand(post.brandId);
   postDialogContent.innerHTML = `
-    <div class="post-detail-hero" style="--thumb: ${post.thumb}"></div>
-    <div class="post-detail-body">
-      <p class="eyebrow">${brand.name} · ${post.channel}</p>
-      <h2>${post.title}</h2>
-      <p>${post.caption}</p>
-      <div class="detail-grid">
-        <div class="metric"><span>Date</span><strong>${parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</strong></div>
-        <div class="metric"><span>Status</span><strong>${post.status}</strong></div>
-        <div class="metric"><span>Owner</span><strong>${post.owner}</strong></div>
+    <div class="detail-layout">
+      <div class="social-preview ${post.format}" style="--brand-accent: ${brand.accent}">
+        ${mediaMarkup(post)}
       </div>
-      <div class="note-block">
-        <label for="postNote"><strong>Post notes</strong></label>
-        <textarea id="postNote">${post.notes || ""}</textarea>
-        <button class="primary-button" type="button" data-save-note="${post.id}">Save post note</button>
+      <div class="detail-copy">
+        <p class="eyebrow">${brand.name} · ${post.channels.join(", ")}</p>
+        <h2>${post.title}</h2>
+        <p>${post.caption}</p>
+        <div class="detail-grid">
+          <div><span>Date</span><strong>${parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</strong></div>
+          <div><span>Time</span><strong>${post.time}</strong></div>
+          <div><span>Status</span><strong>${post.status}</strong></div>
+          <div><span>Owner</span><strong>${post.owner}</strong></div>
+          <div><span>Size</span><strong>${formatLabel(post.format)}</strong></div>
+          <div><span>Media</span><strong>${post.mediaType || "Image"}</strong></div>
+        </div>
+        <label class="note-editor">
+          Notes
+          <textarea id="postNote">${post.notes || ""}</textarea>
+        </label>
+        <button class="primary-button" type="button" data-save-note="${post.id}">Save note</button>
       </div>
     </div>
   `;
   postDialog.showModal();
 }
 
-function savePostNote(postId) {
-  const note = document.querySelector("#postNote").value;
-  savedPostNotes[postId] = note;
-  localStorage.setItem(storageKey, JSON.stringify(savedPostNotes));
+function formatLabel(format) {
+  const labels = {
+    square: "1080 × 1080",
+    story: "1080 × 1920",
+    landscape: "1200 × 628"
+  };
+  return labels[format] || labels.square;
+}
+
+function openAddPostDialog(date = dateKey(today)) {
+  addPostForm.reset();
+  addPostForm.elements.brandId.innerHTML = brands.map((brand) => `<option value="${brand.id}">${brand.name}</option>`).join("");
+  addPostForm.elements.brandId.value = selectedBrand === "all" ? "area" : selectedBrand;
+  addPostForm.elements.date.value = date;
+  addPostForm.elements.time.value = "09:00";
+  addPostDialog.showModal();
+}
+
+function handleAddPost(event) {
+  event.preventDefault();
+  const data = new FormData(addPostForm);
+  const channels = data.getAll("channels");
+  if (!channels.length) {
+    alert("Choose at least one channel.");
+    return;
+  }
+
+  const file = data.get("media");
+  const mediaUrl = file && file.size ? URL.createObjectURL(file) : "";
+  const mediaType = file && file.type.startsWith("video") ? "video" : "image";
+  const brand = getBrand(data.get("brandId"));
+
+  posts.push({
+    id: Date.now(),
+    brandId: data.get("brandId"),
+    date: data.get("date"),
+    time: data.get("time"),
+    title: data.get("title"),
+    channels,
+    status: data.get("status"),
+    format: data.get("format"),
+    owner: data.get("owner"),
+    caption: data.get("caption"),
+    notes: data.get("notes"),
+    mediaType,
+    mediaUrl,
+    color: tintForBrand(brand.id)
+  });
+
+  selectedWeekStart = getMonday(parseDate(data.get("date")));
+  renderWeekOptions();
+  savePosts();
+  addPostDialog.close();
   renderCalendar();
-  postDialog.close();
+}
+
+function tintForBrand(brandId) {
+  return {
+    area: "#d8ecf5",
+    learn: "#dbf9ec",
+    wireless: "#d8f2ed",
+    drive: "#d6edf7"
+  }[brandId] || "#d8ecf5";
 }
 
 brandList.addEventListener("click", (event) => {
@@ -299,63 +417,81 @@ brandList.addEventListener("click", (event) => {
   renderCalendar();
 });
 
-dateStrip.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-date]");
-  if (!button) return;
-  selectedDate = parseDate(button.dataset.date);
+weekSelect.addEventListener("change", () => {
+  selectedWeekStart = parseDate(weekSelect.value);
   renderCalendar();
 });
 
+document.querySelector("#previousWeek").addEventListener("click", () => {
+  selectedWeekStart = addDays(selectedWeekStart, -7);
+  weekSelect.value = dateKey(selectedWeekStart);
+  renderCalendar();
+});
+
+document.querySelector("#nextWeek").addEventListener("click", () => {
+  selectedWeekStart = addDays(selectedWeekStart, 7);
+  weekSelect.value = dateKey(selectedWeekStart);
+  renderCalendar();
+});
+
+document.querySelector("#todayButton").addEventListener("click", () => {
+  selectedWeekStart = getMonday(today);
+  weekSelect.value = dateKey(selectedWeekStart);
+  renderCalendar();
+});
+
+document.querySelector("#newPostButton").addEventListener("click", () => openAddPostDialog());
+
 calendarGrid.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-post-id]");
+  const postButton = event.target.closest("[data-post-id]");
+  if (postButton) {
+    openPost(Number(postButton.dataset.postId));
+    return;
+  }
+  const dayButton = event.target.closest("[data-jump-date]");
+  if (dayButton) openAddPostDialog(dayButton.dataset.jumpDate);
+});
+
+searchInput.addEventListener("input", renderSuggestions);
+
+searchSuggestions.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-suggestion-id]");
   if (!button) return;
-  openPost(Number(button.dataset.postId));
+  const post = posts.find((item) => item.id === Number(button.dataset.suggestionId));
+  selectedWeekStart = getMonday(parseDate(post.date));
+  weekSelect.value = dateKey(selectedWeekStart);
+  searchInput.value = post.title;
+  searchSuggestions.hidden = true;
+  renderCalendar();
+  openPost(post.id);
 });
 
 postDialog.addEventListener("click", (event) => {
   const button = event.target.closest("[data-save-note]");
   if (!button) return;
-  savePostNote(button.dataset.saveNote);
-});
-
-document.querySelector("#previousMonth").addEventListener("click", () => {
-  selectedDate = new Date(2026, Math.max(0, selectedDate.getMonth() - 1), 1, 12);
+  const post = posts.find((item) => item.id === Number(button.dataset.saveNote));
+  post.notes = document.querySelector("#postNote").value;
+  savePosts();
   renderCalendar();
+  postDialog.close();
 });
 
-document.querySelector("#nextMonth").addEventListener("click", () => {
-  selectedDate = new Date(2026, Math.min(11, selectedDate.getMonth() + 1), 1, 12);
-  renderCalendar();
+addPostForm.addEventListener("submit", handleAddPost);
+
+addPostDialog.addEventListener("click", (event) => {
+  if (event.target.closest("[data-close-dialog]")) addPostDialog.close();
 });
 
-document.querySelector("#todayButton").addEventListener("click", () => {
-  selectedDate = new Date("2026-01-07T12:00:00");
-  renderCalendar();
-});
-
-document.querySelector("#newPostButton").addEventListener("click", () => {
-  notesDialog.showModal();
-});
-
-document.querySelector("#dashboardNotesButton").addEventListener("click", () => {
-  dashboardNotes.value = localStorage.getItem(dashboardNotesKey) || "";
+dashboardNotesButton.addEventListener("click", () => {
+  dashboardNotes.value = localStorage.getItem(notesStorageKey) || "";
   notesDialog.showModal();
 });
 
 document.querySelector("#saveDashboardNotes").addEventListener("click", () => {
-  localStorage.setItem(dashboardNotesKey, dashboardNotes.value);
+  localStorage.setItem(notesStorageKey, dashboardNotes.value);
   notesDialog.close();
 });
 
-document.querySelector("#viewTabs").addEventListener("click", (event) => {
-  const button = event.target.closest("[data-view]");
-  if (!button) return;
-  currentView = button.dataset.view;
-  document.querySelectorAll("#viewTabs button").forEach((tab) => tab.classList.toggle("active", tab === button));
-  renderCalendar();
-});
-
-searchInput.addEventListener("input", renderCalendar);
-
 renderBrands();
+renderWeekOptions();
 renderCalendar();
