@@ -1,8 +1,8 @@
 const brands = [
-  { id: "area", name: "AREA", logo: "./assets/area-logo.svg", accent: "#003a5d" },
-  { id: "learn", name: "AREA Learn", logo: "./assets/area-learn-logo.svg", accent: "#05ce7c" },
-  { id: "wireless", name: "AREA Wireless", logo: "./assets/area-wireless-logo.svg", accent: "#03846d" },
-  { id: "drive", name: "AREA DRIVE", logo: "./assets/area-drive-logo.svg", accent: "#1a7599" }
+  { id: "area", name: "AREA", logo: "./assets/area-logo.svg", accent: "#003a5d", tint: "#d8ecf5" },
+  { id: "learn", name: "AREA Learn", logo: "./assets/area-learn-logo.svg", accent: "#05ce7c", tint: "#dcfaec" },
+  { id: "wireless", name: "AREA Wireless", logo: "./assets/area-wireless-logo.svg", accent: "#03846d", tint: "#d9f3ee" },
+  { id: "drive", name: "AREA DRIVE", logo: "./assets/area-drive-logo.svg", accent: "#1a7599", tint: "#dceff7" }
 ];
 
 const today = new Date("2026-05-21T12:00:00");
@@ -126,6 +126,8 @@ const notesDialog = document.querySelector("#notesDialog");
 const dashboardNotes = document.querySelector("#dashboardNotes");
 const visibleBrandLabel = document.querySelector("#visibleBrandLabel");
 const postCountLabel = document.querySelector("#postCountLabel");
+const postFormTitle = document.querySelector("#postFormTitle");
+const postFormSubmit = document.querySelector("#postFormSubmit");
 
 function loadPosts() {
   const saved = JSON.parse(localStorage.getItem(postStorageKey) || "null");
@@ -193,9 +195,18 @@ function getBrand(brandId) {
   return brands.find((brand) => brand.id === brandId) || brands[0];
 }
 
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function renderBrands() {
   const items = [
-    `<button class="brand-logo ${selectedBrand === "all" ? "active" : ""}" type="button" data-brand-id="all" title="All AREA brands"><span>All</span></button>`,
+    `<button class="brand-logo brand-all ${selectedBrand === "all" ? "active" : ""}" type="button" data-brand-id="all" title="All AREA brands"><span>All</span></button>`,
     ...brands.map((brand) => `
       <button class="brand-logo ${brand.id === selectedBrand ? "active" : ""}" style="--brand-accent: ${brand.accent}" type="button" data-brand-id="${brand.id}" title="${brand.name}">
         <img src="${brand.logo}" alt="${brand.name}">
@@ -261,7 +272,7 @@ function renderCell(day, time, visiblePosts) {
 function renderPostCard(post) {
   const brand = getBrand(post.brandId);
   return `
-    <button class="post-card" type="button" data-post-id="${post.id}" style="--post-color: ${post.color}; --brand-accent: ${brand.accent}">
+    <button class="post-card" type="button" data-post-id="${post.id}" style="--post-color: ${tintForBrand(post.brandId)}; --brand-accent: ${brand.accent}">
       <span class="brand-dot"></span>
       <span class="post-time">${post.time}</span>
       <strong>${post.title}</strong>
@@ -323,8 +334,14 @@ function openPost(postId) {
       </div>
       <div class="detail-copy">
         <p class="eyebrow">${brand.name} · ${post.channels.join(", ")}</p>
-        <h2>${post.title}</h2>
-        <p>${post.caption}</p>
+        <div class="detail-title-row">
+          <h2>${escapeHtml(post.title)}</h2>
+          <div class="detail-actions">
+            <button class="icon-action" type="button" data-edit-post="${post.id}" title="Edit post" aria-label="Edit post">✎</button>
+            <button class="text-action danger-action" type="button" data-delete-post="${post.id}">Delete</button>
+          </div>
+        </div>
+        <p>${escapeHtml(post.caption)}</p>
         <div class="detail-grid">
           <div><span>Date</span><strong>${parseDate(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</strong></div>
           <div><span>Time</span><strong>${post.time}</strong></div>
@@ -335,7 +352,7 @@ function openPost(postId) {
         </div>
         <label class="note-editor">
           Notes
-          <textarea id="postNote">${post.notes || ""}</textarea>
+          <textarea id="postNote">${escapeHtml(post.notes || "")}</textarea>
         </label>
         <button class="primary-button" type="button" data-save-note="${post.id}">Save note</button>
       </div>
@@ -353,12 +370,34 @@ function formatLabel(format) {
   return labels[format] || labels.square;
 }
 
-function openAddPostDialog(date = dateKey(today)) {
+function openAddPostDialog(date = dateKey(today), postId = null) {
   addPostForm.reset();
   addPostForm.elements.brandId.innerHTML = brands.map((brand) => `<option value="${brand.id}">${brand.name}</option>`).join("");
-  addPostForm.elements.brandId.value = selectedBrand === "all" ? "area" : selectedBrand;
-  addPostForm.elements.date.value = date;
-  addPostForm.elements.time.value = "09:00";
+  addPostForm.elements.postId.value = postId || "";
+
+  const post = postId ? posts.find((item) => item.id === postId) : null;
+  postFormTitle.textContent = post ? "Edit social post" : "Add a social post";
+  postFormSubmit.textContent = post ? "Update post" : "Save post";
+
+  if (post) {
+    addPostForm.elements.brandId.value = post.brandId;
+    addPostForm.elements.date.value = post.date;
+    addPostForm.elements.time.value = post.time;
+    addPostForm.elements.owner.value = post.owner;
+    addPostForm.elements.status.value = post.status;
+    addPostForm.elements.format.value = post.format;
+    addPostForm.elements.title.value = post.title;
+    addPostForm.elements.caption.value = post.caption;
+    addPostForm.elements.notes.value = post.notes || "";
+    addPostForm.querySelectorAll('input[name="channels"]').forEach((input) => {
+      input.checked = post.channels.includes(input.value);
+    });
+  } else {
+    addPostForm.elements.brandId.value = selectedBrand === "all" ? "area" : selectedBrand;
+    addPostForm.elements.date.value = date;
+    addPostForm.elements.time.value = "09:00";
+  }
+
   addPostDialog.showModal();
 }
 
@@ -371,13 +410,16 @@ function handleAddPost(event) {
     return;
   }
 
+  const existingPost = data.get("postId")
+    ? posts.find((post) => post.id === Number(data.get("postId")))
+    : null;
   const file = data.get("media");
   const mediaUrl = file && file.size ? URL.createObjectURL(file) : "";
-  const mediaType = file && file.type.startsWith("video") ? "video" : "image";
+  const mediaType = file && file.type.startsWith("video") ? "video" : file && file.size ? "image" : existingPost?.mediaType || "image";
   const brand = getBrand(data.get("brandId"));
 
-  posts.push({
-    id: Date.now(),
+  const nextPost = {
+    id: existingPost?.id || Date.now(),
     brandId: data.get("brandId"),
     date: data.get("date"),
     time: data.get("time"),
@@ -389,9 +431,15 @@ function handleAddPost(event) {
     caption: data.get("caption"),
     notes: data.get("notes"),
     mediaType,
-    mediaUrl,
+    mediaUrl: mediaUrl || existingPost?.mediaUrl || "",
     color: tintForBrand(brand.id)
-  });
+  };
+
+  if (existingPost) {
+    posts = posts.map((post) => post.id === existingPost.id ? nextPost : post);
+  } else {
+    posts.push(nextPost);
+  }
 
   selectedWeekStart = getMonday(parseDate(data.get("date")));
   renderWeekOptions();
@@ -401,12 +449,7 @@ function handleAddPost(event) {
 }
 
 function tintForBrand(brandId) {
-  return {
-    area: "#d8ecf5",
-    learn: "#dbf9ec",
-    wireless: "#d8f2ed",
-    drive: "#d6edf7"
-  }[brandId] || "#d8ecf5";
+  return getBrand(brandId).tint || "#d8ecf5";
 }
 
 brandList.addEventListener("click", (event) => {
@@ -467,19 +510,46 @@ searchSuggestions.addEventListener("click", (event) => {
 });
 
 postDialog.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-save-note]");
-  if (!button) return;
-  const post = posts.find((item) => item.id === Number(button.dataset.saveNote));
-  post.notes = document.querySelector("#postNote").value;
-  savePosts();
-  renderCalendar();
-  postDialog.close();
+  const saveButton = event.target.closest("[data-save-note]");
+  const editButton = event.target.closest("[data-edit-post]");
+  const deleteButton = event.target.closest("[data-delete-post]");
+
+  if (saveButton) {
+    const post = posts.find((item) => item.id === Number(saveButton.dataset.saveNote));
+    post.notes = document.querySelector("#postNote").value;
+    savePosts();
+    renderCalendar();
+    postDialog.close();
+  }
+
+  if (editButton) {
+    const postId = Number(editButton.dataset.editPost);
+    postDialog.close();
+    openAddPostDialog(dateKey(today), postId);
+  }
+
+  if (deleteButton) {
+    const postId = Number(deleteButton.dataset.deletePost);
+    const post = posts.find((item) => item.id === postId);
+    if (!post) return;
+    if (!confirm(`Delete "${post.title}" from the calendar?`)) return;
+    posts = posts.filter((item) => item.id !== postId);
+    savePosts();
+    renderCalendar();
+    postDialog.close();
+  }
 });
 
 addPostForm.addEventListener("submit", handleAddPost);
 
 addPostDialog.addEventListener("click", (event) => {
   if (event.target.closest("[data-close-dialog]")) addPostDialog.close();
+});
+
+[postDialog, addPostDialog, notesDialog].forEach((dialog) => {
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
 });
 
 dashboardNotesButton.addEventListener("click", () => {

@@ -31,7 +31,7 @@
               <div id="searchSuggestions" class="search-suggestions" hidden></div>
             </div>
             <button id="todayButton" class="ghost-button" type="button">Today</button>
-            <button id="newPostButton" class="primary-button" type="button">Add post</button>
+          <button id="newPostButton" class="primary-button add-post-button" type="button">Add post</button>
           </div>
         </header>
 
@@ -65,8 +65,9 @@
         <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
         <div class="form-heading">
           <p class="eyebrow">Create content</p>
-          <h2>Add a social post</h2>
+          <h2 id="postFormTitle">Add a social post</h2>
         </div>
+        <input name="postId" type="hidden">
 
         <div class="form-grid">
           <label>
@@ -110,13 +111,13 @@
           <input name="title" type="text" placeholder="Campaign, announcement, reminder" required>
         </label>
 
-        <fieldset>
+        <fieldset class="channel-picker">
           <legend>Channels</legend>
-          <label><input type="checkbox" name="channels" value="IG" checked> IG</label>
-          <label><input type="checkbox" name="channels" value="FB"> FB</label>
-          <label><input type="checkbox" name="channels" value="X"> X</label>
-          <label><input type="checkbox" name="channels" value="LinkedIn"> LinkedIn</label>
-          <label><input type="checkbox" name="channels" value="YouTube"> YouTube</label>
+          <label><input type="checkbox" name="channels" value="IG" checked><span>IG</span></label>
+          <label><input type="checkbox" name="channels" value="FB"><span>FB</span></label>
+          <label><input type="checkbox" name="channels" value="X"><span>X</span></label>
+          <label><input type="checkbox" name="channels" value="LinkedIn"><span>LinkedIn</span></label>
+          <label><input type="checkbox" name="channels" value="YouTube"><span>YouTube</span></label>
         </fieldset>
 
         <label>
@@ -134,7 +135,7 @@
           <textarea name="notes" placeholder="Internal notes for co-workers, approvals, links, or reminders."></textarea>
         </label>
 
-        <button class="primary-button" type="submit">Save post</button>
+        <button id="postFormSubmit" class="primary-button" type="submit">Save post</button>
       </form>
     </dialog>
 
