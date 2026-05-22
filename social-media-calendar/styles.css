@@ -492,6 +492,18 @@ textarea {
   backdrop-filter: blur(12px);
 }
 
+.post-card.approved-post {
+  border-color: rgba(5, 206, 124, .34);
+  background:
+    linear-gradient(135deg, rgba(5, 206, 124, .08), rgba(255, 255, 255, .16)),
+    color-mix(in srgb, var(--post-color) 72%, white 28%);
+  box-shadow: inset 3px 0 0 #05ce7c, 0 12px 28px rgba(3, 132, 109, .1);
+}
+
+.post-card.approved-post strong {
+  padding-right: 0;
+}
+
 .brand-dot {
   position: absolute;
   top: 12px;
@@ -502,6 +514,32 @@ textarea {
   background: var(--brand-accent);
 }
 
+.approved-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: white;
+  background: #03846d;
+  font-size: 11px;
+  font-weight: 900;
+  box-shadow: 0 6px 14px rgba(3, 132, 109, .18);
+}
+
+.approved-badge span {
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .22);
+}
+
 .post-time,
 .post-card small {
   color: var(--muted);
@@ -510,10 +548,10 @@ textarea {
 }
 
 .post-card strong {
-  padding-right: 18px;
+  padding-right: 24px;
 }
 
-.post-card > span:not(.brand-dot):not(.post-time) {
+.post-card > span:not(.brand-dot):not(.post-time):not(.approved-badge) {
   color: var(--muted);
   font-size: 12px;
 }

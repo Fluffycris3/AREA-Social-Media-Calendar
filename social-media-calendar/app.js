@@ -283,8 +283,8 @@ function renderCell(day, time, visiblePosts) {
 function renderPostCard(post) {
   const brand = getBrand(post.brandId);
   return `
-    <button class="post-card" type="button" data-post-id="${post.id}" style="--post-color: ${tintForBrand(post.brandId)}; --brand-accent: ${brand.accent}">
-      <span class="brand-dot"></span>
+    <button class="post-card ${post.approved ? "approved-post" : ""}" type="button" data-post-id="${post.id}" style="--post-color: ${tintForBrand(post.brandId)}; --brand-accent: ${brand.accent}">
+      ${post.approved ? `<span class="approved-badge" aria-label="Approved"><span>✓</span> Approved</span>` : `<span class="brand-dot"></span>`}
       <span class="post-time">${post.time}</span>
       <strong>${post.title}</strong>
       <span>${brand.name}</span>
